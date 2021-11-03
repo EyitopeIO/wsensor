@@ -26,14 +26,14 @@ UNIT_TEST(test_init) {
     UNIT_TEST_END();
 }
 
-UNIT_TEST (test_pop) {
+UNIT_TEST(test_pop) {
 
     UNIT_TEST_BEGIN();
     UNIT_TEST_END();
 
 }
 
-UNIT_TEST (test_push) {
+UNIT_TEST(test_push) {
 
     ringbuffer rb;
     UNIT_TEST_BEGIN();
@@ -41,20 +41,20 @@ UNIT_TEST (test_push) {
 
 }
 
-UNIT_TEST (test_head) {
+UNIT_TEST(test_head) {
 
     UNIT_TEST_BEGIN();
     UNIT_TEST_END();
 }
 
-UNIT_TEST (test_tail) {
+UNIT_TEST(test_tail) {
 
     UNIT_TEST_BEGIN();
     UNIT_TEST_END();
 
 }
 
-UNIT_TEST (test_peek) {
+UNIT_TEST(test_peek) {
 
     UNIT_TEST_BEGIN();
     UNIT_TEST_END();
