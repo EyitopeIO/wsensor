@@ -15,7 +15,7 @@ void test_pop() {
 }
 
 void test_push() {
-    ringbuffer rb
+    ringbuffer rb;
 }
 
 void test_head() {
