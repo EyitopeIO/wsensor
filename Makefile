@@ -7,6 +7,7 @@ CONTIKI_PROJECT = wsensor
 # CFLAGS += --Wall --Wextra 
 
 MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
+PROJECT_SOURCEFILES += eyitope-ring-buffer.c
 
 all: $(CONTIKI_PROJECT)
 
