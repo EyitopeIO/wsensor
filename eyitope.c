@@ -5,9 +5,3 @@
 
 static ringbuffer queue;
 
-
-int main() {
-
-    rb_init(&queue); 
-    return 0;
-}
