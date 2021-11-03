@@ -1,4 +1,4 @@
-CONTIKI = ../
+CONTIKI = ..
 
 include $(CONTIKI)/Makefile.include
 
