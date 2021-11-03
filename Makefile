@@ -1,8 +1,5 @@
-CONTIKI = ../contiki-ng
-
-include $(CONTIKI)/Makefile.include
-
 CONTIKI_PROJECT = wsensor
+
 
 # CFLAGS += --Wall --Wextra 
 
@@ -20,4 +17,6 @@ eyitope-ring-buffer.o: eyitope-ring-buffer.h
 	$(CC) eyitope-ring-buffer.c -o eyitope-ring-buffer.o
 
 
+CONTIKI = ../contiki-ng
+include $(CONTIKI)/Makefile.include
 

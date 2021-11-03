@@ -12,7 +12,6 @@ UNIT_TEST_REGISTER(test_tail, "test tail");
 UNIT_TEST_REGISTER(test_peek, "test peek");
 
 
-
 UNIT_TEST(test_init) {
     ringbuffer rb;
     rb_init(&rb);
