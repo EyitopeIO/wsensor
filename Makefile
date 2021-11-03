@@ -10,8 +10,8 @@ MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
 
 all: $(CONTIKI_PROJECT)
 
-test-queue: eyitope-ring-buffer.h
-	$(CC) eyitope-ring-buffer.c -o test-queue
+test-all: eyitope-calc-test.h
+	$(CC) eyitope-calc-test.c -o test-all
 	
 
 
