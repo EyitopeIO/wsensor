@@ -4,7 +4,7 @@ include $(CONTIKI)/Makefile.include
 
 CONTIKI_PROJECT = wsensor
 
-CFLAGS += --Wall --Wextra 
+# CFLAGS += --Wall --Wextra 
 
 MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
 
