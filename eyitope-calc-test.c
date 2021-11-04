@@ -1,6 +1,5 @@
-
-#include "unit-test.h"
-#include "contiki.h"
+#include <contiki.h>
+#include <unit-test.h>
 #include "eyitope-ring-buffer.h"
 
 UNIT_TEST_REGISTER(test_init, "init test");
