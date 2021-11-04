@@ -9,7 +9,7 @@ TEST_HDR += eyitope-ring-buffer.h
 
 all: $(CONTIKI_PROJECT)
 
-$(CONTIKI_PROJECT)/test-all: $(TEST_SRC) $(TEST_HDR)
+test-all: $(TEST_SRC) $(TEST_HDR)
 	$(CC) $(TEST_SRC) -o $@
 
 
