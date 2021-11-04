@@ -1,16 +1,17 @@
-CONTIKI_PROJECT = wsensor
 CONTIKI = ../contiki-ng
+all: $(CONTIKI_PROJECT)
 include $(CONTIKI)/Makefile.include
 
-MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
+CONTIKI_PROJECT = wsensor
 
-TEST_SRC += eyitope-ring-buffer.c eyitope-calc-test.c
-TEST_HDR += eyitope-ring-buffer.h
+# MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
 
-all: $(CONTIKI_PROJECT)
+# TEST_SRC += eyitope-ring-buffer.c eyitope-calc-test.c
+# TEST_HDR += eyitope-ring-buffer.h
 
-test-all: $(TEST_SRC) $(TEST_HDR)
-	$(CC) $(TEST_SRC) -o $@
+
+# test-all: $(TEST_SRC) $(TEST_HDR)
+# 	$(CC) $(TEST_SRC) -o $@
 
 
 

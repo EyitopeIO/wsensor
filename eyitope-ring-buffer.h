@@ -1,8 +1,6 @@
 #ifndef EYITOPE_RING_BUFFER
 #define EYITOPE_RING_BUFFER
 
-#include <stdlib.h>
-
 #define RING_BUFFER_SIZE 54
 
 typedef struct ringbuffer {
