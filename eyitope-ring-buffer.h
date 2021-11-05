@@ -13,7 +13,7 @@ typedef struct ringbuffer {
 
 void rb_init(ringbuffer *rb);
 
-void rb_push(ringbuffer *rb, int value);
+int rb_push(ringbuffer *rb, int value);
 
 int rb_pop(ringbuffer *rb);
 

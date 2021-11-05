@@ -7,12 +7,12 @@ void rb_init(ringbuffer *rb) {
     rb->ring_buffer_size = RING_BUFFER_SIZE;
 }
 
-void rb_push(ringbuffer *rb, int value) {
+int rb_push(ringbuffer *rb, int value) {
 
 	if ((rb->front == 0 && rb->rear == rb->ring_buffer_size-1) ||
 			(rb->rear == (rb->front-1)%(rb->ring_buffer_size-1))) {
         rb->overflow = 1;
-		return;
+		return -1;
 	}
 	else if (rb->front == -1) /* Insert First Element */ {
 		rb->front = rb->rear = 0;
@@ -26,6 +26,7 @@ void rb_push(ringbuffer *rb, int value) {
 		(rb->rear)++;
 		rb->buffer[rb->rear] = value;
 	}
+    return 0;
 }
 
 int rb_pop(ringbuffer *rb) {
