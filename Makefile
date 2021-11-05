@@ -2,5 +2,5 @@ CONTIKI_PROJECT = wsensor
 all: $(CONTIKI_PROJECT)
 MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
 
-CONTIKI = ../contiki-ng
+CONTIKI = ../
 include $(CONTIKI)/Makefile.include
