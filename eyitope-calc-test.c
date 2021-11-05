@@ -1,5 +1,5 @@
-#include <contiki.h>
-#include <services/unit-test/unit-test.h>
+#include "contiki.h"
+#include "unit-test.h"
 #include "eyitope-ring-buffer.h"
 
 UNIT_TEST_REGISTER(test_init, "init test");
@@ -57,6 +57,8 @@ UNIT_TEST(test_init)
 
 
 PROCESS(test_all, "Unit testing");
+AUTOSTART_PROCESSES(&test_all);
+
 PROCESS_THREAD(test_all, ev, data) 
 {
     PROCESS_BEGIN();
