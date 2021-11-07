@@ -28,7 +28,11 @@ UNIT_TEST(test_osw)
     }
     for (i = 0; i < 8; i++) {
         zr = (float*)rb_pop(&rb);
-        printf("%.1f ", *zr);
+        if (zr != NULL) {
+            printf("%.1f\n", *zr);
+        } else {
+            printf("zr is null at zr[%d]\n", i)
+        }
     }
     printf("\n");
 
