@@ -1,26 +1,26 @@
 #ifndef EYITOPE_RING_BUFFER
 #define EYITOPE_RING_BUFFER
 
-#define RING_BUFFER_SIZE 54
+#define RING_BUFFER_SIZE 32
 
 typedef struct ringbuffer {
     int front;
     int rear;
     int ring_buffer_size;
-    int buffer[RING_BUFFER_SIZE];
+    float buffer[RING_BUFFER_SIZE];
     int overflow;
 } ringbuffer;
 
 void rb_init(ringbuffer *rb);
 
-void rb_push(ringbuffer *rb, int value);
+int rb_push(ringbuffer *rb, int value);
 
-int rb_pop(ringbuffer *rb);
+void* rb_pop(ringbuffer *rb);
 
-int rb_head(ringbuffer *rb);
+void* rb_head(ringbuffer *rb);
 
-int rb_tail(ringbuffer *rb);
+void* rb_tail(ringbuffer *rb);
 
-int rb_peek(ringbuffer *rb);
+void* rb_peek(ringbuffer *rb);
 
 #endif

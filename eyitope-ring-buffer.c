@@ -1,5 +1,7 @@
 
 #include "eyitope-ring-buffer.h"
+#include <stdlib.h>
+
 
 void rb_init(ringbuffer *rb) {
     rb->front = rb->rear = -1;
@@ -7,12 +9,12 @@ void rb_init(ringbuffer *rb) {
     rb->ring_buffer_size = RING_BUFFER_SIZE;
 }
 
-void rb_push(ringbuffer *rb, int value) {
+int rb_push(ringbuffer *rb, int value) {
 
 	if ((rb->front == 0 && rb->rear == rb->ring_buffer_size-1) ||
 			(rb->rear == (rb->front-1)%(rb->ring_buffer_size-1))) {
         rb->overflow = 1;
-		return;
+		return -1;
 	}
 	else if (rb->front == -1) /* Insert First Element */ {
 		rb->front = rb->rear = 0;
@@ -26,14 +28,15 @@ void rb_push(ringbuffer *rb, int value) {
 		(rb->rear)++;
 		rb->buffer[rb->rear] = value;
 	}
+    return 0;
 }
 
-int rb_pop(ringbuffer *rb) {
-    int rt = 0;
+void * rb_pop(ringbuffer *rb) {
+    static void *rt = NULL;
     if (rb->front == -1) {
-        return -1;
+        return NULL;
     }
-    rt = rb->buffer[rb->front];
+    rt = &rb->buffer[rb->front];
     rb->buffer[rb->front] = -1;
     if (rb->front == rb->rear) {
         rb->front = -1;
@@ -45,23 +48,29 @@ int rb_pop(ringbuffer *rb) {
     else {
         (rb->front)++;
     }
-    return rt;
+    return &rt;
 }
 
-int rb_head(ringbuffer *rb) {
-    return rb->buffer[rb->front];
+void * rb_head(ringbuffer *rb) {
+    static void *ret = NULL;
+    ret = &rb->buffer[rb->front];
+    return ret;
 }
 
-int rb_tail(ringbuffer *rb) {
-    return rb->buffer[rb->rear];
+void * rb_tail(ringbuffer *rb) {
+    static void *ret = NULL;
+    ret = &rb->buffer[rb->rear];
+    return ret;
 }
 
-int rb_peek(ringbuffer *rb) {
+void * rb_peek(ringbuffer *rb) {
+    static void *ret = NULL;
     if (rb->front == rb->rear) {
-        return -1;
+        return NULL;
     }
     else {
-        return rb->buffer[rb->rear];
+        ret = &(rb->buffer[rb->rear]);
+        return ret;
     }
 }
 
