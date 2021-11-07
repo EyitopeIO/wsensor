@@ -26,6 +26,9 @@ UNIT_TEST(test_osw)
     
     zr = (float*)rb_peek(&rb);
     printf("peek(): %f", *zr);
+    rb_push(&rb, 128.2f);
+    zr = (float*)rb_peek(&rb);
+    printf("peek(): %f", *zr);
 
     for (i = 0; i != 7; i++) {
         zr = (float*)rb_pop(&rb);
