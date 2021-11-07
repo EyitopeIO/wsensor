@@ -13,29 +13,37 @@ UNIT_TEST(test_osw)
     UNIT_TEST_BEGIN();
 
     ringbuffer rb;
-    float *zr = NULL;
     rb_init(&rb);
+
+    int i = 0;
+    float a = 0.0;
+    float *zr = NULL;
     float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
     
-    // Fill ring buffer with test data
-    for (float a = 5.0f; a < 8.0f; a++) {
+    /*
+     *Fill ring buffer with test data
+    */
+    for (a = 5.0f; a < 12.0f; a++) {
         rb_push(&rb, a);
     }
-    printf("Ring buffer -> ");
-    for (int i = 0; i < 8; i++) {
-        printf("%f ", *(float*)rb_pop(&rb));
+    for (i = 0; i < 8; i++) {
+        zr = (float*)rb_pop(&rb);
+        printf("%2.2f ", *zr);
     }
     printf("\n");
 
+    /*
+     * The actual calculation
+    */    
     zr = osw_average(&rb);
 
-    for (int i = 0; i < 8; i++) {
+    for (i = 0; i < 8; i++) {
         printf("%1.2f ", zr[i]);
     }
     printf("\n");
 
 
-    for (int i = 0; i < 8; i++) {
+    for (i = 0; i < 8; i++) {
         UNIT_TEST_ASSERT(zr[i] == cfm[i]);
     }
 
