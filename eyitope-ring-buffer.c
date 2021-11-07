@@ -11,8 +11,8 @@ void rb_init(ringbuffer *rb) {
 
 int rb_push(ringbuffer *rb, float value) {
 
-	if ((rb->front == 0 && rb->rear == rb->ring_buffer_size-1) ||
-			(rb->rear == (rb->front-1)%(rb->ring_buffer_size-1))) {
+	if ((rb->front == 0 && rb->rear == (rb->ring_buffer_size)-1) ||
+			(rb->rear == ((rb->front)-1)%((rb->ring_buffer_size)-1))) {
         rb->overflow = 1;
 		return -1;
 	}
@@ -20,7 +20,7 @@ int rb_push(ringbuffer *rb, float value) {
 		rb->front = rb->rear = 0;
 		rb->buffer[rb->rear] = value;
 	}
-	else if (rb->rear == rb->ring_buffer_size-1 && rb->front != 0) {
+	else if (rb->rear == (rb->ring_buffer_size)-1 && rb->front != 0) {
 		rb->rear = 0;
 		rb->buffer[rb->rear] = value;
 	}
