@@ -3,7 +3,7 @@ CONTIKI_PROJECT = eyitope-calc-test
 all: $(CONTIKI_PROJECT) eyitope-calc-test.c
 
 MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
-PROJECT_SOURCEFILES +=  eyitope-ring-buffer.c
+PROJECT_SOURCEFILES +=  eyitope-ring-buffer.c eyitope-calc.c
 
 CONTIKI = ..
 include $(CONTIKI)/Makefile.include

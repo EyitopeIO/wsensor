@@ -5,4 +5,4 @@
 
 float* osw_average(ringbuffer *rb);
 
-#endif EYITOPE_CALC_H
+#endif

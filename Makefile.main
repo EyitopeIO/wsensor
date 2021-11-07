@@ -2,7 +2,6 @@ CONTIKI_PROJECT = eyitope
 
 all: $(CONTIKI_PROJECT) 
 
-# MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
 PROJECT_SOURCEFILES += eyitope-ring-buffer.c eyitope-calc.c
 
 CONTIKI = ..

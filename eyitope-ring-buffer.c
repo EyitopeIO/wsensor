@@ -9,7 +9,7 @@ void rb_init(ringbuffer *rb) {
     rb->ring_buffer_size = RING_BUFFER_SIZE;
 }
 
-int rb_push(ringbuffer *rb, int value) {
+int rb_push(ringbuffer *rb, float value) {
 
 	if ((rb->front == 0 && rb->rear == rb->ring_buffer_size-1) ||
 			(rb->rear == (rb->front-1)%(rb->ring_buffer_size-1))) {
@@ -32,11 +32,12 @@ int rb_push(ringbuffer *rb, int value) {
 }
 
 void * rb_pop(ringbuffer *rb) {
-    static void *rt = NULL;
+    static void *rt;
+    rt = NULL;
     if (rb->front == -1) {
-        return NULL;
+        return rt;
     }
-    rt = &rb->buffer[rb->front];
+    rt = &(rb->buffer[rb->front]);
     rb->buffer[rb->front] = -1;
     if (rb->front == rb->rear) {
         rb->front = -1;
