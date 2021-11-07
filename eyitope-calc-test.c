@@ -31,7 +31,7 @@ UNIT_TEST(test_osw)
         if (zr != NULL) {
             printf("%.1f\n", *zr);
         } else {
-            printf("zr is null at zr[%d]\n", i)
+            printf("zr is null at zr[%d]\n", i);
         }
     }
     printf("\n");
