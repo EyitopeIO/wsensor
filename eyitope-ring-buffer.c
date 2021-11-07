@@ -49,7 +49,7 @@ void * rb_pop(ringbuffer *rb) {
     else {
         (rb->front)++;
     }
-    return &rt;
+    return rt;
 }
 
 void * rb_head(ringbuffer *rb) {

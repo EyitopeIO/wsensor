@@ -28,7 +28,7 @@ UNIT_TEST(test_osw)
     }
     for (i = 0; i < 8; i++) {
         zr = (float*)rb_pop(&rb);
-        printf("%2.2f ", *zr);
+        printf("%.1f ", *zr);
     }
     printf("\n");
 
