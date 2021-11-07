@@ -15,7 +15,7 @@ UNIT_TEST(test_osw)
     rb_init(&rb);
 
     int i = 0;
-    float a = 0.0;
+    float a = 0.0f;
     float *zr;
     float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
     
@@ -32,11 +32,8 @@ UNIT_TEST(test_osw)
 
     for (i = 0; i != 7; i++) {
         zr = (float*)rb_pop(&rb);
-        if (zr != NULL) {
-            printf("%2.1f\n", (float)*zr);
-        } else {
-            printf("zr is null at zr[%d]\n", i);
-        }
+        if (zr != NULL) printf("popped: %f\n", (float)(*zr));
+        else printf("NULL at zr[%d]\n",i);
     }
     printf("\n");
 
