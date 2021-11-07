@@ -10,14 +10,13 @@ UNIT_TEST_REGISTER(test_osw, "Calculation test");
 
 UNIT_TEST(test_osw) 
 {
-    UNIT_TEST_BEGIN();
 
     ringbuffer rb;
     rb_init(&rb);
 
     int i = 0;
     float a = 0.0;
-    float *zr = NULL;
+    float *zr;
     float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
     
     /*
@@ -26,10 +25,10 @@ UNIT_TEST(test_osw)
     for (a = 5.0f; a < 12.0f; a++) {
         rb_push(&rb, a);
     }
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i != 6; i++) {
         zr = (float*)rb_pop(&rb);
         if (zr != NULL) {
-            printf("%.1f\n", *zr);
+            printf("%.1f\n", (float)*zr);
         } else {
             printf("zr is null at zr[%d]\n", i);
         }
@@ -46,11 +45,10 @@ UNIT_TEST(test_osw)
     }
     printf("\n");
 
-
+    UNIT_TEST_BEGIN();
     for (i = 0; i < 8; i++) {
         UNIT_TEST_ASSERT(zr[i] == cfm[i]);
     }
-
     UNIT_TEST_END();
 }
 

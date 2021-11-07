@@ -33,9 +33,8 @@ int rb_push(ringbuffer *rb, float value) {
 
 void * rb_pop(ringbuffer *rb) {
     static void *rt;
-    rt = NULL;
     if (rb->front == -1) {
-        return rt;
+        return NULL;
     }
     rt = &(rb->buffer[rb->front]);
     rb->buffer[rb->front] = -1;
@@ -43,7 +42,7 @@ void * rb_pop(ringbuffer *rb) {
         rb->front = -1;
         rb->rear = -1;
     }
-    else if (rb->front == rb->ring_buffer_size - 1) {
+    else if (rb->front == (rb->ring_buffer_size - 1)) {
         rb->front = 0;
     }
     else {
