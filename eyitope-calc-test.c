@@ -22,10 +22,12 @@ UNIT_TEST(test_osw)
     /*
      *Fill ring buffer with test data
     */
-    for (a = 5.0f; a < 12.0f; a++) {
-        rb_push(&rb, a);
-    }
-    for (i = 0; i != 6; i++) {
+    for (a = 5.0f; (rb_push(&rb, a) != -1) && (a < 12.0f); a++);
+    
+    zr = (float*)rb_peek(&rb);
+    printf("peek(): %f", *zr);
+
+    for (i = 0; i != 7; i++) {
         zr = (float*)rb_pop(&rb);
         if (zr != NULL) {
             printf("%2.1f\n", (float)*zr);
