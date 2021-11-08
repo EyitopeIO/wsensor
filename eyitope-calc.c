@@ -5,7 +5,7 @@
 
 struct tracker* osw_average(queue_t tomato_stack)
 {
-    static float x[6];
+    static float x[7];
     static struct tracker t;
 
     struct sensorval *p; 
