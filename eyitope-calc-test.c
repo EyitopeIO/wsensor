@@ -70,8 +70,8 @@ UNIT_TEST(test_osw)
     struct sensorval sv6; 
     struct sensorval sv7;
     struct sensorval sv8;  
-    struct sensorval sv9;  
-    struct sensorval sv10;
+    // struct sensorval sv9;  
+    // struct sensorval sv10;
 
     sv1.reading = a + 1.0;
     sv2.reading = a + 2.0;
@@ -81,8 +81,8 @@ UNIT_TEST(test_osw)
     sv6.reading = a + 6.0;
     sv7.reading = a + 7.0;
     sv8.reading = a + 8.0;
-    sv9.reading = a + 9.0;
-    sv10.reading = a + 10.0;
+    // sv9.reading = a + 9.0;
+    // sv10.reading = a + 10.0;
 
 
     queue_enqueue(worm, &sv1);
@@ -93,18 +93,27 @@ UNIT_TEST(test_osw)
     queue_enqueue(worm, &sv6);
     queue_enqueue(worm, &sv7);
     queue_enqueue(worm, &sv8);
-    queue_enqueue(worm, &sv9);
-    queue_enqueue(worm, &sv10);
+    // queue_enqueue(worm, &sv9);
+    // queue_enqueue(worm, &sv10);
     
     // while ((p = queue_dequeue(worm)) != NULL) printf("dq: %f\n", (float)(p->reading));
 
-    t = osw_average(worm);
 
     UNIT_TEST_BEGIN();
+
+    t = osw_average(worm);
+
     UNIT_TEST_ASSERT(t != NULL); 
+    
     for (i = 0; i < 6; i++) {
         UNIT_TEST_ASSERT(cfm[i] == t->data[i]); 
     }    
+
+    t = osw_average(worm);
+    
+    // 
+    UNIT_TEST_ASSERT(cfm[7] == t->data[0]); 
+
     UNIT_TEST_END();
 }
 
