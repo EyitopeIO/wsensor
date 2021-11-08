@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "assert.h": "c",
-        "eyitope-ring-buffer.h": "c"
+        "eyitope-ring-buffer.h": "c",
+        "eyitope-calc.h": "c"
     }
 }

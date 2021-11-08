@@ -18,7 +18,7 @@ struct tracker* osw_average(queue_t tomato_stack)
     while(i--) x[i] = 0;
 
     for(i = 6; ((p = queue_dequeue(tomato_stack)) != NULL) && i--; ) {
-        b = abs(i - 7);
+        b = abs(i - 6);
         total += p->reading ;
         x[abs(b)] = total / b;
         printf("rd: %f, to: %f, av: %f\n", p->reading, total, total/b);
