@@ -101,7 +101,7 @@ UNIT_TEST(test_osw)
 
     UNIT_TEST_BEGIN();
 
-    t = osw_average(worm);
+    t = osw_average(&worm);
 
     UNIT_TEST_ASSERT(t != NULL); 
     
@@ -109,7 +109,7 @@ UNIT_TEST(test_osw)
         UNIT_TEST_ASSERT(cfm[i] == t->data[i]); 
     }    
 
-    t = osw_average(worm);
+    t = osw_average(&worm);
     
     // 
     UNIT_TEST_ASSERT(cfm[7] == t->data[0]); 
