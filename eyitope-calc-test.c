@@ -95,7 +95,7 @@ UNIT_TEST(test_osw)
 
     UNIT_TEST_BEGIN();
     UNIT_TEST_ASSERT(t != NULL); 
-    for (i = t->index; i != 0; i--) {
+    for (i = t->index; i > 0; i--) {
         UNIT_TEST_ASSERT(cfm[i] == t->data[i]); 
     }    
     UNIT_TEST_END();

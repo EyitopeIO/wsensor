@@ -18,13 +18,13 @@ struct tracker* osw_average(queue_t tomato_stack)
         // b = abs(i - 6);
         total += p->reading ;
         x[i - 1] = total / i;
-        printf("rd: %f, to: %f, av: %f\n, i: %d\n", p->reading, total, total/i, i);
+        printf("rd: %f, to: %f, av: %f, i: %d\n", p->reading, total, total/i, i);
     }
     total -= x[0];
 
-    for(i = 0; i < 7; i++) printf("x[%d] = %f\n", i, x[i]);
+    // for(i = 0; i < 7; i++) printf("x[%d] = %f\n", i, x[i]);
 
-    t.index = i;
+    t.index = i - 1;
     t.data = x;
     return &t;
 }
