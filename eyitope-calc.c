@@ -9,7 +9,7 @@ struct tracker* osw_average(queue_t tomato_stack)
 
     struct sensorval *p; 
     float total = 0.0f;
-    int i = 7;
+    int i = 6;
 
     while(i--) x[i] = 0;
 
