@@ -10,12 +10,14 @@ struct tracker* osw_average(queue_t tomato_stack)
 
     struct sensorval *p; 
     float total = 0.0f;
+    float phead = 0.0f;
+
     int i = 6;
     int b = 0;
 
     while(i--) x[i] = 0;
 
-    for(i = 7; ((p = queue_dequeue(tomato_stack)) != NULL) && i--; ) {
+    for(i = 6; ((p = queue_dequeue(tomato_stack)) != NULL) && i--; ) {
         b = abs(i - 7);
         total += p->reading ;
         x[abs(b)] = total / b;
