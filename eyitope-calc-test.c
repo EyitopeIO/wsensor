@@ -60,7 +60,7 @@ UNIT_TEST(test_osw)
 
     queue_init(sensorval);
     for (a = 5.0f; (queue_enqueue(sensorval, &a) != -1) && (a < 12.0f); a++);
-    while ((p = queue_dequeue(sensorval)) != NULL) printf("dq: %f\n", (float)(*p));
+    while ((p = queue_dequeue(sensorval)) != NULL) printf("dq: %f\n", (float)(p->reading));
 
     UNIT_TEST_BEGIN();
     UNIT_TEST_ASSERT(1+1 == 2);

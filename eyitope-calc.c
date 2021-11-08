@@ -1,7 +1,7 @@
 #include "eyitope-calc.h"
 #include <stdlib.h>
 
-float * osw_average(ringbuffer *z)
+float * osw_average(struct sensorval *sv)
 {
     static float x[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     float *popped = NULL; 

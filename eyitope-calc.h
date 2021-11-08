@@ -4,13 +4,11 @@
 #include "eyitope-ring-buffer.h"
 #include "queue.h"
 
-#define QUEUE(sensorval)
-
 struct sensorval {
-    struct queue *next;
+    struct queue_t *next;
     float reading;
 };
 
-float* osw_average(ringbuffer *rb);
+float* osw_average(struct sensorval *sv);
 
 #endif
