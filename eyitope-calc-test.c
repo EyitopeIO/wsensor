@@ -60,7 +60,7 @@ UNIT_TEST(test_osw)
 
     UNIT_TEST_BEGIN();
 
-    queue_t worm;
+    QUEUE(worm);
     queue_init(worm);
 
     struct sensorval sv1;
