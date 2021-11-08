@@ -58,6 +58,8 @@ UNIT_TEST(test_osw)
     struct sensorval *p = NULL;
     float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
 
+    UNIT_TEST_BEGIN();
+
     queue_t worm;
     queue_init(worm);
 
@@ -90,7 +92,6 @@ UNIT_TEST(test_osw)
     
     while ((p = queue_dequeue(worm)) != NULL) printf("dq: %f\n", (float)(p->reading));
 
-    UNIT_TEST_BEGIN();
     UNIT_TEST_ASSERT(1+1 == 2);
 
     UNIT_TEST_END();
