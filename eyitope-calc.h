@@ -9,6 +9,11 @@ struct sensorval {
     float reading;
 };
 
+struct tracker {
+    int index;
+    float *data;
+};
+
 float* osw_average(struct sensorval *sv);
 
 #endif
