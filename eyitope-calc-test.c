@@ -89,7 +89,7 @@ UNIT_TEST(test_osw)
     queue_enqueue(worm, &sv7);
     queue_enqueue(worm, &sv8);
     
-    while ((p = queue_dequeue(worm)) != NULL) printf("dq: %f\n", (float)(p->reading));
+    // while ((p = queue_dequeue(worm)) != NULL) printf("dq: %f\n", (float)(p->reading));
 
     t = osw_average(worm);
 
