@@ -55,7 +55,7 @@ UNIT_TEST(test_osw)
 
     int i = 0;
     float a = 0.0f;
-    float *p = NULL;
+    struct sensorval *p = NULL;
     float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
 
     queue_t worm;
