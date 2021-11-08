@@ -79,7 +79,6 @@ UNIT_TEST(test_osw)
     sv6.reading = a + 6.0;
     sv7.reading = a + 7.0;
     sv8.reading = a + 8.0;
-    sv9.reading = a + 8.0;
 
     queue_enqueue(worm, &sv1);
     queue_enqueue(worm, &sv2);
