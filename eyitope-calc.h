@@ -14,6 +14,6 @@ struct tracker {
     float *data;
 };
 
-float* osw_average(struct sensorval *sv);
+struct tracker* osw_average(queue_t tomato_stack);
 
 #endif
