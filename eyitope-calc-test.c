@@ -71,7 +71,7 @@ UNIT_TEST(test_osw)
     struct sensorval sv7;
     struct sensorval sv8;  
     struct sensorval sv9;  
-    struct sensorval sv10  
+    struct sensorval sv10;
 
     sv1.reading = a + 1.0;
     sv2.reading = a + 2.0;
@@ -82,7 +82,7 @@ UNIT_TEST(test_osw)
     sv7.reading = a + 7.0;
     sv8.reading = a + 8.0;
     sv9.reading = a + 9.0;
-    sv10.reading = a + 9.0;
+    sv10.reading = a + 10.0;
 
 
     queue_enqueue(worm, &sv1);
