@@ -14,6 +14,6 @@ struct tracker {
     float *data;
 };
 
-struct tracker* osw_average(queue_t tomato_stack);
+struct tracker* osw_average(queue_t *tomato_stack);
 
 #endif
