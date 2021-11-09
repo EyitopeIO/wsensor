@@ -60,7 +60,7 @@ UNIT_TEST(test_osw)
     printf("avg: %f\n", *avg);
     UNIT_TEST_ASSERT(avg != NULL); 
     UNIT_TEST_ASSERT(*avg == cfm[6]);    // cfm[6] = 8.0 
-      
+    
     avg = osw_average(&worm);     
     UNIT_TEST_ASSERT(avg != NULL);
     printf("avg: %f\n", *avg);
