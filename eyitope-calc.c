@@ -5,8 +5,9 @@
 
 float* osw_average(list_t *tomato_stack)  
 {
-    static struct sensorval_l *p = NULL;
     static float average = 0.0f;
+    
+    struct sensorval_l *p = NULL;
     uint8_t n = 0;
     float total = 0.0f;
 

@@ -42,12 +42,18 @@ UNIT_TEST(test_osw)
     list_add(worm, &sv1);
     list_add(worm, &sv2);
     list_add(worm, &sv3);
-    list_add(worm, &sv4);
-    list_add(worm, &sv5);
 
     UNIT_TEST_BEGIN();
 
-    avg = osw_average(&worm); // Find average of first 7
+    avg = osw_average(&worm); // Find average of first 3
+    printf("avg: %f\n", *avg);
+    UNIT_TEST_ASSERT(avg != NULL); 
+    UNIT_TEST_ASSERT(*avg == cfm[2]);    // cfm[2] = 6.0 
+    
+    list_add(worm, &sv4);
+    list_add(worm, &sv5);
+
+    avg = osw_average(&worm); // Find average of first 5
     printf("avg: %f\n", *avg);
     UNIT_TEST_ASSERT(avg != NULL); 
     UNIT_TEST_ASSERT(*avg == cfm[4]);    // cfm[4] = 7.0 
@@ -56,10 +62,10 @@ UNIT_TEST(test_osw)
     list_add(worm, &sv7);
     list_add(worm, &sv8);
 
-    avg = osw_average(&worm); // Find average of first 7
+    avg = osw_average(&worm); // Find average of first 8
     printf("avg: %f\n", *avg);
     UNIT_TEST_ASSERT(avg != NULL); 
-    UNIT_TEST_ASSERT(*avg == cfm[6]);    // cfm[6] = 8.0 
+    UNIT_TEST_ASSERT(*avg == cfm[6]);    // cfm[7] = 8.0 
     
     avg = osw_average(&worm);     
     UNIT_TEST_ASSERT(avg != NULL);
