@@ -20,6 +20,7 @@ float* osw_average(list_t *tomato_stack)
         average = total / n++;
         p = list_item_next(p);
     }
+    list_pop(*tomato_stack);
 
     return &average;
 }
