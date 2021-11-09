@@ -54,10 +54,9 @@ UNIT_TEST(test_osw)
 {
 
     int i = 0;
-    float a = 4.0f;
-    struct sensorval *p = NULL;
-    struct tracker *t; 
+    float *avg = NULL;
     float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
+    float tst[] = {5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f};
 
     QUEUE(worm);
     queue_init(worm);
@@ -73,17 +72,16 @@ UNIT_TEST(test_osw)
     // struct sensorval sv9;  
     // struct sensorval sv10;
 
-    sv1.reading = a + 1.0;
-    sv2.reading = a + 2.0;
-    sv3.reading = a + 3.0;
-    sv4.reading = a + 4.0;
-    sv5.reading = a + 5.0;
-    sv6.reading = a + 6.0;
-    sv7.reading = a + 7.0;
-    sv8.reading = a + 8.0;
-    // sv9.reading = a + 9.0;
+    sv1.reading = tst[0];
+    sv2.reading = tst[1];
+    sv3.reading = tst[2];
+    sv4.reading = tst[3];
+    sv5.reading = tst[4];
+    sv6.reading = tst[5];
+    sv7.reading = tst[6];
+    sv8.reading = tst[7];
+    // sv9.reading = a + 9.0;tores values read from sensor.
     // sv10.reading = a + 10.0;
-
 
     queue_enqueue(worm, &sv1);
     queue_enqueue(worm, &sv2);
@@ -101,22 +99,16 @@ UNIT_TEST(test_osw)
 
     UNIT_TEST_BEGIN();
 
-    t = osw_average(&worm);
-
-    UNIT_TEST_ASSERT(t != NULL); 
-    
-    for (i = 0; i < 6; i++) {
-        UNIT_TEST_ASSERT(cfm[i] == t->data[i]); 
-    }    
-
-    t = osw_average(&worm);
-    
-    // 
-    UNIT_TEST_ASSERT(cfm[7] == t->data[0]); 
+    avg = osw_average(&worm); // Find average of first 7
+    UNIT_TEST_ASSERT(avg != NULL); 
+    UNIT_TEST_ASSERT(*avg == 56.0f);    // 56 is average of first 7 
+      
+    avg = osw_average(&worm);     
+    UNIT_TEST_ASSERT(avg != NULL);  
+    UNIT_TEST_ASSERT(*avg == 9);        // 9 is average of 8th element and previous 6
 
     UNIT_TEST_END();
 }
-
 
 
 PROCESS(test_all, "Calculation unit test");
