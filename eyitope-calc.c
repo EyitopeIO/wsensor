@@ -9,30 +9,16 @@ float* osw_average(list_t *tomato_stack)
     static float total = 0.0f;
     static float average = 0.0f;
     uint8_t n = 1;
+    uint8_t l = 0;
     uint8_t ft = 1;     // First time
 
-    if (ft) {
-        if (list_length(*tomato_stack) < WINDOW_SIZE) {     // At startup, items < WINDOW_SIZE
-            uint8_t l = list_length(*tomato_stack);
-            p = list_head(*tomato_stack);
-            while (l--) {
-                total += p->reading;
-                average = total / n++;
-                p = list_item_next(p);
-                printf("tot:%f, avg:%f, nxt:%f", total, average, p->reading);
-            }
-            if (n >= WINDOW_SIZE) ft = 0;
-        }
-    }
-    else {          // During normal operation, tomato_stack would always be length WINDOW_SIZE
-        p = list_head(*tomato_stack);
-        float head = p->reading;
-        printf("head: %f\n", head);
-        p = list_tail(*tomato_stack);
-        float tail = p->reading;
-        printf("tail: %f\n", tail);
-        average = ((total - head) + tail) / WINDOW_SIZE;
-        list_pop(*tomato_stack);
+    p = list_head(*tomato_stack);
+    // l = list_length(*tomato_stack);
+
+    while(n != list_length(*tomato_stack)) {
+        total = total + p->reading;
+        average = total / n++;
+        p = list_item_next(p);
     }
 
     return &average;
