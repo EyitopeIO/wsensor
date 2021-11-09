@@ -6,16 +6,14 @@
 float* osw_average(list_t *tomato_stack)  
 {
     static struct sensorval_l *p = NULL;
-    static float total = 0.0f;
     static float average = 0.0f;
     uint8_t n = 1;
-    uint8_t l = 0;
-    uint8_t ft = 1;     // First time
+    float total = 0.0f;
 
     p = list_head(*tomato_stack);
     // l = list_length(*tomato_stack);
 
-    while(n != list_length(*tomato_stack)) {
+    while(n != WINDOW_SIZE) {
         total = total + p->reading;
         average = total / n++;
         p = list_item_next(p);
