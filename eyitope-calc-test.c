@@ -100,11 +100,13 @@ UNIT_TEST(test_osw)
     UNIT_TEST_BEGIN();
 
     avg = osw_average(&worm); // Find average of first 7
+    printf("avg: %f\n", *avg);
     UNIT_TEST_ASSERT(avg != NULL); 
     UNIT_TEST_ASSERT(*avg == 56.0f);    // 56 is average of first 7 
       
     avg = osw_average(&worm);     
-    UNIT_TEST_ASSERT(avg != NULL);  
+    UNIT_TEST_ASSERT(avg != NULL);
+    printf("avg: %f\n", *avg);
     UNIT_TEST_ASSERT(*avg == 9);        // 9 is average of 8th element and previous 6
 
     UNIT_TEST_END();
