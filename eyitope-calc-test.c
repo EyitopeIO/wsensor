@@ -87,7 +87,7 @@ UNIT_TEST(test_equals_window_size)
     UNIT_TEST_END();
 }
 
-UNIT_TEST(unit_test_test_above_window_size)
+UNIT_TEST(test_above_window_size)
 {
  LIST(worm);
     list_init(worm);
