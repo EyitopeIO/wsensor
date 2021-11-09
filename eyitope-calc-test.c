@@ -1,11 +1,9 @@
 #include "contiki.h"
 #include "unit-test.h"
 #include "list.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include "eyitope-calc.h"
-
 
 /*
 * Assume window size is 7
@@ -14,11 +12,9 @@ UNIT_TEST_REGISTER(test_below_window_size, "Test when input below window size");
 UNIT_TEST_REGISTER(test_equals_window_size, "Test when exactly window elements");
 UNIT_TEST_REGISTER(test_above_window_size, "Test input above window elements");
 
-int i = 0;
-float *avg = NULL;
-float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
-float tst[] = {5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f};
-
+static float avg = 0.0f;
+static float cfm[] = {5.0f, 5.5f, 6.0f, 6.5f, 7.0f, 7.5f, 8.0f, 9.0};
+static float tst[] = {5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f};
 
 UNIT_TEST(test_below_window_size)
 {
@@ -40,13 +36,12 @@ UNIT_TEST(test_below_window_size)
     UNIT_TEST_BEGIN();
 
     avg = osw_average(&worm); // Find average of first 3
-    printf("avg: %f\n", *avg);
-    UNIT_TEST_ASSERT(avg != NULL); 
-    UNIT_TEST_ASSERT(*avg == cfm[2]);
+    printf("avg: %f\n", avg);
+    UNIT_TEST_ASSERT(avg > 0.0f); 
+    UNIT_TEST_ASSERT(avg == cfm[2]);
     
     UNIT_TEST_END();
 }
-
 
 UNIT_TEST(test_equals_window_size) 
 {
@@ -80,16 +75,16 @@ UNIT_TEST(test_equals_window_size)
     UNIT_TEST_BEGIN();
 
     avg = osw_average(&worm); // Find average of first 3
-    printf("avg: %f\n", *avg);
-    UNIT_TEST_ASSERT(avg != NULL); 
-    UNIT_TEST_ASSERT(*avg == cfm[6]);
+    printf("avg: %f\n", avg);
+    UNIT_TEST_ASSERT(avg > 0); 
+    UNIT_TEST_ASSERT(avg == cfm[6]);
     
     UNIT_TEST_END();
 }
 
 UNIT_TEST(test_above_window_size)
 {
- LIST(worm);
+    LIST(worm);
     list_init(worm);
 
     struct sensorval_l sv1;
@@ -122,14 +117,14 @@ UNIT_TEST(test_above_window_size)
     UNIT_TEST_BEGIN();
 
     avg = osw_average(&worm); // Find average of first 7
-    printf("avg: %f\n", *avg);
-    UNIT_TEST_ASSERT(avg != NULL); 
-    UNIT_TEST_ASSERT(*avg == cfm[6]);
+    printf("avg: %f\n", avg);
+    UNIT_TEST_ASSERT(avg > 0); 
+    UNIT_TEST_ASSERT(avg == cfm[6]);
 
     avg = osw_average(&worm); // Find average of first 8
-    printf("avg: %f\n", *avg);
-    UNIT_TEST_ASSERT(avg != NULL); 
-    UNIT_TEST_ASSERT(*avg == cfm[7]);
+    printf("avg: %f\n", avg);
+    UNIT_TEST_ASSERT(avg > 0); 
+    UNIT_TEST_ASSERT(avg == cfm[7]);
     
     UNIT_TEST_END();
 }
