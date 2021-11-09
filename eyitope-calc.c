@@ -15,7 +15,7 @@ float* osw_average(list_t *tomato_stack)
 
     while(n < WINDOW_SIZE) {
         total = total + p->reading;
-        average = total / n + 1;
+        average = total / (n + 1);
         p = list_item_next(p);
         n++;
     }
