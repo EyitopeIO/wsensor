@@ -56,7 +56,6 @@ UNIT_TEST(test_osw)
 
 
     UNIT_TEST_BEGIN();
-
     avg = osw_average(&worm); // Find average of first 7
     printf("avg: %f\n", *avg);
     UNIT_TEST_ASSERT(avg != NULL); 

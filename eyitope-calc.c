@@ -22,8 +22,10 @@ float* osw_average(list_t *tomato_stack)
     else {          // During normal operation, tomato_stack would always be length WINDOW_SIZE
         p = list_head(*tomato_stack);
         float head = p->reading;
+        printf("head: %f\n", head);
         p = list_tail(*tomato_stack);
         float tail = p->reading;
+        printf("tail: %f\n", tail);
         average = ((total - head) + tail) / WINDOW_SIZE;
         list_pop(*tomato_stack);
     }
