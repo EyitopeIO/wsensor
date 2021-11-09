@@ -38,24 +38,24 @@ UNIT_TEST(test_osw)
     sv6.reading = tst[5];
     sv7.reading = tst[6];
     sv8.reading = tst[7];
-    // sv9.reading = a + 9.0;tores values read from sensor.
-    // sv10.reading = a + 10.0;
 
     list_add(worm, &sv1);
     list_add(worm, &sv2);
     list_add(worm, &sv3);
     list_add(worm, &sv4);
     list_add(worm, &sv5);
+
+    UNIT_TEST_BEGIN();
+
+    avg = osw_average(&worm); // Find average of first 7
+    printf("avg: %f\n", *avg);
+    UNIT_TEST_ASSERT(avg != NULL); 
+    UNIT_TEST_ASSERT(*avg == cfm[4]);    // cfm[4] = 7.0 
+
     list_add(worm, &sv6);
     list_add(worm, &sv7);
     list_add(worm, &sv8);
-    // list_add(worm, &sv9);
-    // list_add(worm, &sv10);
-    
-    // while ((p = queue_dequeue(worm)) != NULL) printf("dq: %f\n", (float)(p->reading));
 
-
-    UNIT_TEST_BEGIN();
     avg = osw_average(&worm); // Find average of first 7
     printf("avg: %f\n", *avg);
     UNIT_TEST_ASSERT(avg != NULL); 
