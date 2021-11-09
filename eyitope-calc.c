@@ -19,6 +19,7 @@ float* osw_average(list_t *tomato_stack)
                 total += p->reading;
                 average = total / n++;
                 p = list_item_next(p);
+                printf("tot:%f, avg:%f, nxt:%f", total, average, p->reading);
             }
             if (n >= WINDOW_SIZE) ft = 0;
         }
