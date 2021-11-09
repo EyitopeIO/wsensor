@@ -3,28 +3,29 @@
 #include <math.h>
 #include <stdio.h>
 
-float* osw_average(queue_t *tomato_stack)
+float* osw_average(list_t *tomato_stack)  
 {
-    static int n = 1;
-    static struct sensorval *p = NULL;
+    static struct sensorval_l *p = NULL;
     static float total = 0.0f;
     static float average = 0.0f;
-    static float first_e = 0.0f;        // First item on the queue
-    static uint8_t under_7 = 1;     // Used to know if we now have more than 7 elements
+    uint8_t n = 1;
 
-    if (under_7 == 1)
-        while(n < 8) {
-            if ((p = queue_dequeue(*tomato_stack)) != NULL) {
-                if (n == 1) first_e = p->reading;
-                total += p->reading ;
-                average = total / n;
-            }
-            if (n++ > WINDOW_SIZE) under_7 = 1;
+    if (list_length(*tomato_stack) < WINDOW_SIZE) {     // At startup, items < WINDOW_SIZE
+        uint8_t l = list_length(*tomato_stack);
+        p = list_head(*tomato_stack);
+        while (l--) {
+            total += p->reading;
+            average = total / n++;
+            p = list_item_next(p);
         }
-    else {
-        if ((p = queue_dequeue(*tomato_stack)) != NULL) {
-            average = ((total - first_e) + p->reading) / WINDOW_SIZE;
-        }
+    }
+    else {          // During normal operation, tomato_stack would always be length WINDOW_SIZE
+        p = list_head(*tomato_stack);
+        float head = p->reading;
+        p = list_tail(*tomato_stack);
+        float tail = p->reading;
+        average = ((total - head) + tail) / WINDOW_SIZE;
+        list_pop(*tomato_stack);
     }
 
     return &average;

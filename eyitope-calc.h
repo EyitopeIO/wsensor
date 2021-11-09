@@ -3,6 +3,7 @@
 
 #include "eyitope-ring-buffer.h"
 #include "queue.h"
+#include "list.h"
 
 #define WINDOW_SIZE 7
 
@@ -11,8 +12,13 @@
 * Do not ever modify the first member. Ever.
 * Your business is only with the second member.
 */
-struct sensorval {
+struct sensorval_q {
     struct queue_t *next;
+    float reading;
+};
+
+struct sensorval_l {
+    struct list_t *next;
     float reading;
 };
 
