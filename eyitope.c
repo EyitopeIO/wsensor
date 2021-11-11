@@ -38,7 +38,10 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
     SENSORS_ACTIVATE(sht11_sensor);
 
+
     while(1) {
+
+        PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         for (i=0; i < WINDOW_SIZE; i++) {
             hu_r.reading = sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
@@ -55,7 +58,6 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         // Send over network here;
 
-        PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
         etimer_reset(&time_to_read);
     }
 
