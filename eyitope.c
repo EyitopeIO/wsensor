@@ -1,8 +1,9 @@
 
 #include "contiki.h"
 #include "eyitope-calc.h"
-#include "dev/sensor/sht11/sht11.h"
-#include "dev/sensor/sht11/sht11-sensor.h"
+// #include "dev/sensor/sht11/sht11.h"
+// #include "dev/sensor/sht11/sht11-sensor.h"
+#include "dev/sht11-sensor.h"
 #include "sys/etimer.h"
 #include "stdlib.h"
 #include "stdio.h"
