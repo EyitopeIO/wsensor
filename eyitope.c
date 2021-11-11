@@ -1,10 +1,10 @@
 
 #include "contiki.h"
 #include "eyitope-calc.h"
-// #include "dev/sensor/sht11/sht11.h"
-// #include "dev/sensor/sht11/sht11-sensor.h"
-#include "dev/sht11-sensor.h"
+#include "dev/sensor/sht11/sht11.h"
+#include "dev/sensor/sht11/sht11-sensor.h"
 #include "sys/etimer.h"
+#include "sys/clock.h"
 #include "stdlib.h"
 #include "stdio.h"
 
@@ -58,8 +58,6 @@ PROCESS_THREAD(sense_and_send, ev, data)
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
         etimer_reset(&time_to_read);
     }
-
-
 
     PROCESS_END();
 }
