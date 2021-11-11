@@ -1,9 +1,0 @@
-CONTIKI_PROJECT = eyitope-buff-test
-
-all: $(CONTIKI_PROJECT) eyitope-buff-test.c
-
-MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
-PROJECT_SOURCEFILES +=  eyitope-ring-buffer.c
-
-CONTIKI = ..
-include $(CONTIKI)/Makefile.include
