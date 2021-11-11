@@ -46,8 +46,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
             list_add(quantum_tunnel_t, &te_r);
         }
 
-        avr_h = (float)osw_average(quantum_tunnel_h);
-        avr_t = (float)osw_average(quantum_tunnel_t);
+        avr_h = (float)osw_average(&quantum_tunnel_h);
+        avr_t = (float)osw_average(&Bug quantum_tunnel_t);
 
         printf("avg humidity: %f\n", avr_h);
         printf("avg temperature: %f\n", avr_t);
