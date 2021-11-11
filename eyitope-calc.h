@@ -1,7 +1,6 @@
 #ifndef EYITOPE_CALC_H
 #define EYITOPE_CALC_H
 
-#include "eyitope-ring-buffer.h"
 #include "queue.h"
 #include "list.h"
 

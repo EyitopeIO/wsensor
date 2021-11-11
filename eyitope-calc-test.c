@@ -36,7 +36,7 @@ UNIT_TEST(test_below_window_size)
     UNIT_TEST_BEGIN();
 
     avg = osw_average(&worm); // Find average of first 3
-    printf("avg: %f\n", avg);
+    printf("avg <: %f\n", avg);
     UNIT_TEST_ASSERT(avg > 0.0f); 
     UNIT_TEST_ASSERT(avg == cfm[2]);
     
@@ -75,7 +75,7 @@ UNIT_TEST(test_equals_window_size)
     UNIT_TEST_BEGIN();
 
     avg = osw_average(&worm); // Find average of first 3
-    printf("avg: %f\n", avg);
+    printf("avg =: %f\n", avg);
     UNIT_TEST_ASSERT(avg > 0); 
     UNIT_TEST_ASSERT(avg == cfm[6]);
     
@@ -122,7 +122,7 @@ UNIT_TEST(test_above_window_size)
     UNIT_TEST_ASSERT(avg == cfm[6]);
 
     avg = osw_average(&worm); // Find average of first 8
-    printf("avg: %f\n", avg);
+    printf("avg >: %f\n", avg);
     UNIT_TEST_ASSERT(avg > 0); 
     UNIT_TEST_ASSERT(avg == cfm[7]);
     

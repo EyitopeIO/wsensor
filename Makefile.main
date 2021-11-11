@@ -2,7 +2,7 @@ CONTIKI_PROJECT = eyitope
 
 all: $(CONTIKI_PROJECT) 
 
-PROJECT_SOURCEFILES += eyitope-ring-buffer.c eyitope-calc.c
+PROJECT_SOURCEFILES += eyitope-calc.c
 
 CONTIKI = ..
 include $(CONTIKI)/Makefile.include
