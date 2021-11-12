@@ -67,9 +67,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
         avr_t = osw_average(&quantum_tunnel_t);
         avr_t = -4 + (0.0405 * avr_t) - ((2.8 * pow(10, -6)) * pow(avr_t, 2));
 
-        // printf("avg humidity: %f\n", avr_h);
-        // printf("avg temperat#include "dev/sensor/sht11/sht11.h"
-// #include "dev/sensor/sht11/sht11-sensor.h"ure: %f\n", avr_t);
+        printf("avg humidity: %f\n", avr_h);
+        printf("avg temperature: %f\n", avr_t);
 
         // Send over network here;
 
