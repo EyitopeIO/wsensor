@@ -1,12 +1,13 @@
 
 #include "contiki.h"
 #include "eyitope-calc.h"
-#include "dev/sensor/sht11/sht11.h"
-#include "dev/sensor/sht11/sht11-sensor.h"
+// #include "dev/sensor/sht11/sht11.h"
+// #include "dev/sensor/sht11/sht11-sensor.h"
 #include "sys/etimer.h"
 #include "sys/clock.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "sys/node-id.h"
 #include "math.h"
 #include "heapmem.h"
 
@@ -30,6 +31,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
     PROCESS_BEGIN();
 
+    random_init(3);
+
     list_init(quantum_tunnel_h);
     list_init(quantum_tunnel_t);
 
@@ -41,14 +44,18 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
     etimer_set(&time_to_read, CLOCK_SECOND * 8 );   // 1 mins / 7 secs
 
-    SENSORS_ACTIVATE(sht11_sensor);
+    // SENSORS_ACTIVATE(sht11_sensor);
 
     while(1) {
 
         for (i=0,hu_r=hu_p,te_r=te_p; i < WINDOW_SIZE; i++,hu_r++,te_r++) {
             PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
-            hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
-            te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
+            // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
+            // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
+            
+            hu_r->reading = (float)random_rand();
+            te_r->reading = (float)random_rand();
+            
             list_add(quantum_tunnel_h, hu_r);
             list_add(quantum_tunnel_t, te_r);
             etimer_reset(&time_to_read);
