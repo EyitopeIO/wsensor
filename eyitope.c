@@ -17,6 +17,8 @@ AUTOSTART_PROCESSES(&sense_and_send);
 
 PROCESS_THREAD(sense_and_send, ev, data) 
 {
+    PROCESS_BEGIN();
+
     static struct sensorval_l *hu_r;    // Humidity readings
     static struct sensorval_l *te_r;    // Temperature readings
     static struct sensorval_l *hu_p;
@@ -26,7 +28,6 @@ PROCESS_THREAD(sense_and_send, ev, data)
     float avr_h;
     float avr_t;
 
-    PROCESS_BEGIN();
 
     LIST(quantum_tunnel_h);     // List of humidity readings
     LIST(quantum_tunnel_t);     // List of temperature readings
@@ -38,7 +39,10 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
     hu_p = (struct sensorval_l*)heapmem_alloc(WINDOW_SIZE * sizeof(struct sensorval_l));
     te_p = (struct sensorval_l*)heapmem_alloc(WINDOW_SIZE * sizeof(struct sensorval_l));
-    if (hu_p == NULL || te_p == NULL) PROCESS_EXIT();
+    if (hu_p == NULL || te_p == NULL) {
+        printf("Not enough memory!\n");
+        PROCESS_EXIT();
+    }
 
     avr_h = avr_t = 0.0f;
 
@@ -53,17 +57,15 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         printf("Loop!\n");
 
-        i = 0;
-
-        for (int i=0,hu_r=hu_p,te_r=te_p; i < WINDOW_SIZE; i++,hu_r++,te_r++) {
+        hu_r = hu_p;
+        te_r = te_p;
+        for (int i=0; i < WINDOW_SIZE; i++,hu_r++,te_r++) {
             
             PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
             // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
-            
             hu_r->reading = (float)random_rand();
             te_r->reading = (float)random_rand();
-            
             list_add(quantum_tunnel_h, hu_r);
             list_add(quantum_tunnel_t, te_r);
             etimer_reset(&time_to_read);
