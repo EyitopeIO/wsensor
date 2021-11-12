@@ -8,6 +8,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
+#include "heapmem.h"
 
 PROCESS(sense_and_send, "Main process");
 
@@ -32,8 +33,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
     list_init(quantum_tunnel_h);
     list_init(quantum_tunnel_t);
 
-    hu_p = (struct sensorval_l*)calloc(WINDOW_SIZE, sizeof(struct sensorval_l));
-    te_p = (struct sensorval_l*)calloc(WINDOW_SIZE, sizeof(struct sensorval_l));
+    hu_p = (struct sensorval_l*)heapmem_alloc(WINDOW_SIZE * sizeof(struct sensorval_l));
+    te_p = (struct sensorval_l*)heapmem_alloc(WINDOW_SIZE * sizeof(struct sensorval_l));
     if (hu_p == NULL || te_p == NULL) PROCESS_EXIT();
 
     avr_h = avr_t = 0.0f;
@@ -66,8 +67,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
     }
 
-    free(hu_p);
-    free(te_p);
+    heapmem_free(hu_p);
+    heapmem_free(te_p);
 
     PROCESS_END();
 }
