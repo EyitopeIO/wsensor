@@ -24,9 +24,9 @@ PROCESS_THREAD(sense_and_send, ev, data)
     static struct sensorval_l *te_p;
 
     static struct etimer time_to_read;
-    float avr_h;
-    float avr_t;
-    int i;
+    static float avr_h;
+    static float avr_t;
+    static int counter;
 
     PROCESS_BEGIN();
 
@@ -60,9 +60,9 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         hu_r = hu_p;
         te_r = te_p;
-        i = WINDOW_SIZE;
+        counter = WINDOW_SIZE;
 
-        while (i--) { 
+        while (counter--) { 
             PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
             // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
