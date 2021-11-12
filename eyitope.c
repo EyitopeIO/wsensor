@@ -87,7 +87,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
             // te_r->reading = (float)random_rand();
             // list_add(quantum_tunnel_h, hu_r++);
             // list_add(quantum_tunnel_t, te_r++);
-            list_add(&quantum_l, th_r++);
+            list_add(quantum_l, th_r++);
             etimer_reset(&time_to_read);
         }
         avr_h = (0.01 * osw_average(&quantum_l)) - 36.9;
@@ -98,7 +98,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         while (counter--) { 
             PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
             th_r->reading = (float)random_rand();
-            list_add(&quantum_l, th_r++); 
+            list_add(quantum_l, th_r++); 
             etimer_reset(&time_to_read);
         }
         avr_t = osw_average(&quantum_l);
