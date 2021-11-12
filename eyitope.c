@@ -64,7 +64,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
     avr_h = avr_t = 0.0f;
 
-    etimer_set(&time_to_read, CLOCK_SECOND * 8 );   // 1 mins / 7 secs
+    etimer_set(&time_to_read, CLOCK_SECOND);   // 1 mins / 7 secs
 
     // SENSORS_ACTIVATE(sht11_sensor);
     
@@ -76,11 +76,11 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         // hu_r = hu_p;
         // te_r = te_p;
+        PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         counter = WINDOW_SIZE;
         th_r = th_p;
         while (counter--) { 
-            PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
             // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
             th_r->reading = (float)random_rand();
@@ -88,7 +88,6 @@ PROCESS_THREAD(sense_and_send, ev, data)
             // list_add(quantum_tunnel_h, hu_r++);
             // list_add(quantum_tunnel_t, te_r++);
             list_add(quantum_l, th_r++);
-            etimer_reset(&time_to_read);
         }
         avr_h = (0.01 * osw_average(&quantum_l)) - 36.9;
         avr_h = (0.01 * avr_h) - 36.9;
@@ -96,7 +95,6 @@ PROCESS_THREAD(sense_and_send, ev, data)
         counter = WINDOW_SIZE;
         th_r = th_p;
         while (counter--) { 
-            PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
             th_r->reading = (float)random_rand();
             list_add(quantum_l, th_r++); 
             etimer_reset(&time_to_read);
@@ -107,7 +105,10 @@ PROCESS_THREAD(sense_and_send, ev, data)
         printf("avg humidity: %f\n", avr_h);
         printf("avg temperature: %f\n", avr_t);
 
+
         // Send over network here;
+
+        etimer_reset(&time_to_read);
 
     }
 
