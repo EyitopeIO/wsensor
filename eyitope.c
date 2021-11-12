@@ -17,7 +17,6 @@ AUTOSTART_PROCESSES(&sense_and_send);
 
 PROCESS_THREAD(sense_and_send, ev, data) 
 {
-    PROCESS_BEGIN();
 
     static struct sensorval_l *hu_r;    // Humidity readings
     static struct sensorval_l *te_r;    // Temperature readings
@@ -27,8 +26,9 @@ PROCESS_THREAD(sense_and_send, ev, data)
     static struct etimer time_to_read;
     float avr_h;
     float avr_t;
-    int i = 0;
+    int i;
 
+    PROCESS_BEGIN();
 
     LIST(quantum_tunnel_h);     // List of humidity readings
     LIST(quantum_tunnel_t);     // List of temperature readings
