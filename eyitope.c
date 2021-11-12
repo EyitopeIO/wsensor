@@ -45,10 +45,16 @@ PROCESS_THREAD(sense_and_send, ev, data)
     etimer_set(&time_to_read, CLOCK_SECOND * 8 );   // 1 mins / 7 secs
 
     // SENSORS_ACTIVATE(sht11_sensor);
+    
+    printf("Sensor activated!\n");
+
 
     while(1) {
 
+        printf("Loop!\n");
+
         for (i=0,hu_r=hu_p,te_r=te_p; i < WINDOW_SIZE; i++,hu_r++,te_r++) {
+            
             PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
             // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
