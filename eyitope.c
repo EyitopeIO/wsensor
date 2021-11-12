@@ -60,15 +60,16 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         hu_r = hu_p;
         te_r = te_p;
-        for (i=0; i < WINDOW_SIZE; i++,hu_r++,te_r++) {
-            
+        i = WINDOW_SIZE;
+
+        while (i--) { 
             PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
             // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
             hu_r->reading = (float)random_rand();
             te_r->reading = (float)random_rand();
-            list_add(quantum_tunnel_h, hu_r);
-            list_add(quantum_tunnel_t, te_r);
+            list_add(quantum_tunnel_h, hu_r++);
+            list_add(quantum_tunnel_t, te_r++);
             etimer_reset(&time_to_read);
         }
 
