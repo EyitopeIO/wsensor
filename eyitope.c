@@ -84,6 +84,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
             // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
             th_r->reading = abs((float)random_rand());
+            printf("th_r1: %f\n",th_r->reading);
             // te_r->reading = (float)random_rand();
             // list_add(quantum_tunnel_h, hu_r++);
             // list_add(quantum_tunnel_t, te_r++);
@@ -97,6 +98,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         th_r = th_p;
         while (counter--) { 
             th_r->reading = abs((float)random_rand());
+            printf("th_r2: %f\n",th_r->reading);
             list_add(quantum_l, th_r++); 
             etimer_reset(&time_to_read);
         }
