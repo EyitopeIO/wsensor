@@ -83,7 +83,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         while (counter--) { 
             // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
-            th_r->reading = (float)random_rand();
+            th_r->reading = abs((float)random_rand());
             // te_r->reading = (float)random_rand();
             // list_add(quantum_tunnel_h, hu_r++);
             // list_add(quantum_tunnel_t, te_r++);
@@ -95,12 +95,12 @@ PROCESS_THREAD(sense_and_send, ev, data)
         counter = WINDOW_SIZE;
         th_r = th_p;
         while (counter--) { 
-            th_r->reading = (float)random_rand();
+            th_r->reading = abs((float)random_rand());
             list_add(quantum_l, th_r++); 
             etimer_reset(&time_to_read);
         }
         avr_t = osw_average(&quantum_l);
-        avr_t = -4 + (0.0405 * avr_t) - ((2.8 * pow(10, -6)) * pow(avr_t, 2));
+        avr_t = -4 + (0.0405 * avr_t) - (0.0000028 * avr_t * avr_t);
 
         printf("avg humidity: %f\n", avr_h);
         printf("avg temperature: %f\n", avr_t);
