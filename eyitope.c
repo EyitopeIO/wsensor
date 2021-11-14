@@ -90,6 +90,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
             list_add(quantum_l, th_r++);
         }
         avr_h = (0.01 * osw_average(&quantum_l)) - 36.9;
+        printf("avg1 humidity: %f\n",avr_h);
         avr_h = (0.01 * avr_h) - 36.9;
 
         counter = WINDOW_SIZE;
@@ -100,6 +101,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
             etimer_reset(&time_to_read);
         }
         avr_t = osw_average(&quantum_l);
+        printf("avg1 temperature: %f\n",avr_t);
         avr_t = -4 + (0.0405 * avr_t) - (0.0000028 * avr_t * avr_t);
 
         printf("avg humidity: %f\n", avr_h);
