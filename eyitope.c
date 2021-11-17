@@ -35,7 +35,7 @@ static int counter;
 
 static struct simple_udp_connection udp_conn;
 static uip_ipaddr_t dest_addr;     // destination IP address
-static char json_formatted[20];     // {"+aa.bb","+cc.dd"}
+static char json_formatted[24];     // {"+aa.bb","+cc.dd"}
 
 static void
 udp_rx_callback(struct simple_udp_connection *c,
@@ -95,7 +95,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         th_r = th_p;
         while (counter--) { 
             // th_r->reading = abs((float)random_rand());
-            thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
+            th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
             // printf("temperature readings: %f\n",th_r->reading);
             list_add(quantum_l, th_r++);
         }
@@ -108,7 +108,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         th_r = th_p;
         while (counter--) { 
             // th_r->reading = abs((float)random_rand());
-            thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
+            th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // printf("th_r2: %f\n",th_r->reading);
             list_add(quantum_l, th_r++); 
         }
@@ -121,8 +121,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         /* Send over network */
         if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
-            sprintf(json_formatted, "{"%2.2f","%2.2f"}", (double)avr_t, (double)avr_t);
-            simple_udp_sendto(&udp_conn, json_formatted,strlen(json_formatted),&dest_addr);
+            sprintf(json_formatted, "{\"%.2f\",\"%.2f\"}", (double)avr_t, (double)avr_t);
+            simple_udp_sendto(&udp_conn, json_formatted, strlen(json_formatted), &dest_addr);
         }
 
         etimer_reset(&time_to_read);
