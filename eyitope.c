@@ -24,6 +24,8 @@
 #define UDP_CLIENT_PORT 8000
 #define UDP_SERVER_PORT 8100
 
+
+
 static struct sensorval_l *th_r;    // Humidity & temperature readings 
 static struct sensorval_l *th_p;    // Pointer to block of memory
 static struct etimer time_to_read;
@@ -33,7 +35,6 @@ static int counter;
 
 static struct simple_udp_connection udp_conn;
 static uip_ipaddr_t dest_addr;     // destination IP address
-
 static char json_formatted[20];     // {"+aa.bb","+cc.dd"}
 
 static void
@@ -63,7 +64,6 @@ AUTOSTART_PROCESSES(&sense_and_send);
 
 PROCESS_THREAD(sense_and_send, ev, data) 
 {
-
 
     PROCESS_BEGIN();
 
@@ -100,7 +100,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
             list_add(quantum_l, th_r++);
         }
         avr_h = (0.01 * osw_average(&quantum_l)) - 36.9;
-        printf("avg1 humidity: %f\n",avr_h);
+        printf("avg1 humidity: %f\n",(double)avr_h);
         avr_h = (0.01 * avr_h) - 36.9;
 
         /* Read Humidity values */
@@ -113,15 +113,15 @@ PROCESS_THREAD(sense_and_send, ev, data)
             list_add(quantum_l, th_r++); 
         }
         avr_t = osw_average(&quantum_l);
-        printf("avg1 temperature: %f\n",avr_t);
+        printf("avg1 temperature: %f\n",(double)avr_t);
         avr_t = -4 + (0.0405 * avr_t) - (0.0000028 * avr_t * avr_t);
 
-        printf("avg humidity: %f\n", avr_h);
-        printf("avg temperature: %f\n", avr_t);
+        printf("avg humidity: %f\n", (double)avr_h);
+        printf("avg temperature: %f\n", (double)avr_t);
 
         /* Send over network */
         if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
-            sprintf(json_formatted, "{"%2.2f","%2.2f"}", avr_t, avr_t);
+            sprintf(json_formatted, "{"%2.2f","%2.2f"}", (double)avr_t, (double)avr_t);
             simple_udp_sendto(&udp_conn, json_formatted,strlen(json_formatted),&dest_addr);
         }
 
