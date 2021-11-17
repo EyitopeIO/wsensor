@@ -95,7 +95,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         th_r = th_p;
         while (counter--) { 
             // th_r->reading = abs((float)random_rand());
-            thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
+            th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
             // printf("temperature readings: %f\n",th_r->reading);
             list_add(quantum_l, th_r++);
         }
@@ -108,7 +108,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         th_r = th_p;
         while (counter--) { 
             // th_r->reading = abs((float)random_rand());
-            thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
+            th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // printf("th_r2: %f\n",th_r->reading);
             list_add(quantum_l, th_r++); 
         }
