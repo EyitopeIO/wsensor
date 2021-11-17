@@ -1,8 +1,8 @@
 
 #include "contiki.h"
 #include "eyitope-calc.h"
-// #include "dev/sensor/sht11/sht11.h"
-// #include "dev/sensor/sht11/sht11-sensor.h"
+#include "dev/sensor/sht11/sht11.h"
+#include "dev/sensor/sht11/sht11-sensor.h"
 #include "sys/etimer.h"
 #include "sys/clock.h"
 #include "stdlib.h"
@@ -12,19 +12,17 @@
 #include "math.h"
 #include "memb.h"
 
-#include "lib/random.h"
-#include "net/ip/uip.h"
-#include "net/ipv6/uip-ds6.h"
-#include "net/ip/uip-udp-packet.h"
-#ifdef WITH_COMPOWER
-#include "powertrace.h"
-#endif
-#include <string.h>
+#include "net/routing/routing.h"
+#include "net/netstack.h"
+#include "net/ipv6/simple-udp.h"
+#include "sys/log.h"
 
-#include "dev/serial-line.h"
-#include "net/ipv6/uip-ds6-route.h"
+#define LOG_MODULE "App"
+#define LOG_LEVEL LOG_LEVEL_INFO
 
-
+#define WITH_SERVER_REPLY 1
+#define UDP_CLIENT_PORT 8000
+#define UDP_SERVER_PORT 8100
 
 static struct sensorval_l *th_r;    // Humidity & temperature readings 
 static struct sensorval_l *th_p;    // Pointer to block of memory
@@ -33,6 +31,31 @@ static float avr_h;     // Average humidity
 static float avr_t;     // Average temperature
 static int counter;  
 
+static struct simple_udp_connection udp_conn;
+static uip_ipaddr_t dest_addr;     // destination IP address
+
+static char json_formatted[20];     // {"+aa.bb","+cc.dd"}
+
+static void
+udp_rx_callback(struct simple_udp_connection *c,
+         const uip_ipaddr_t *sender_addr,
+         uint16_t sender_port,
+         const uip_ipaddr_t *receiver_addr,
+         uint16_t receiver_port,
+         const uint8_t *data,
+         uint16_t datalen)
+{
+
+  LOG_INFO("Received response '%.*s' from ", datalen, (char *) data);
+  LOG_INFO_6ADDR(sender_addr);
+#if LLSEC802154_CONF_ENABLED
+  LOG_INFO_(" LLSEC LV:%d", uipbuf_get_attr(UIPBUF_ATTR_LLSEC_LEVEL));
+#endif
+  LOG_INFO_("\n");
+
+}
+/*---------------------------------------------------------------------------*/
+
 
 PROCESS(sense_and_send, "Main process");
 
@@ -40,9 +63,15 @@ AUTOSTART_PROCESSES(&sense_and_send);
 
 PROCESS_THREAD(sense_and_send, ev, data) 
 {
+
+
     PROCESS_BEGIN();
 
-    LSIST(quantum_l);        // List of acquired data points
+    /* Initialize UDP connection */
+    simple_udp_register(&udp_conn, UDP_CLIENT_PORT, NULL,
+                      UDP_SERVER_PORT, udp_rx_callback);
+
+    LIST(quantum_l);        // List of acquired data points
     MEMB(th_buff, struct sensorval_l, WINDOW_SIZE);     // Block of memory
     random_init(3);
     list_init(quantum_l);
@@ -61,14 +90,12 @@ PROCESS_THREAD(sense_and_send, ev, data)
         printf("Loop!\n");
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
-        /*
-        * Read temperature values
-        */
+        /* Read temperature values */
         counter = WINDOW_SIZE;
         th_r = th_p;
         while (counter--) { 
-            th_r->reading = abs((float)random_rand());
-            // thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
+            // th_r->reading = abs((float)random_rand());
+            thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
             // printf("temperature readings: %f\n",th_r->reading);
             list_add(quantum_l, th_r++);
         }
@@ -76,14 +103,12 @@ PROCESS_THREAD(sense_and_send, ev, data)
         printf("avg1 humidity: %f\n",avr_h);
         avr_h = (0.01 * avr_h) - 36.9;
 
-        /*
-        * Read Humidity values
-        */
+        /* Read Humidity values */
         counter = WINDOW_SIZE;
         th_r = th_p;
         while (counter--) { 
-            th_r->reading = abs((float)random_rand());
-            // thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
+            // th_r->reading = abs((float)random_rand());
+            thr_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
             // printf("th_r2: %f\n",th_r->reading);
             list_add(quantum_l, th_r++); 
         }
@@ -94,7 +119,11 @@ PROCESS_THREAD(sense_and_send, ev, data)
         printf("avg humidity: %f\n", avr_h);
         printf("avg temperature: %f\n", avr_t);
 
-        // Send over network here;
+        /* Send over network */
+        if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
+            sprintf(json_formatted, "{"%2.2f","%2.2f"}", avr_t, avr_t);
+            simple_udp_sendto(&udp_conn, json_formatted,strlen(json_formatted),&dest_addr);
+        }
 
         etimer_reset(&time_to_read);
     }
