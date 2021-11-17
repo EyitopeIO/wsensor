@@ -121,8 +121,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         /* Send over network */
         if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
-            sprintf(json_formatted, "{"%2.2f","%2.2f"}", (double)avr_t, (double)avr_t);
-            simple_udp_sendto(&udp_conn, json_formatted,strlen(json_formatted),&dest_addr);
+            sprintf(json_formatted, "{"%.2f","%.2f"}", (double)avr_t, (double)avr_t);
+            simple_udp_sendto(&udp_conn, json_formatted, strlen(json_formatted), &dest_addr);
         }
 
         etimer_reset(&time_to_read);
