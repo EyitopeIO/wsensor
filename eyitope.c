@@ -25,7 +25,6 @@
 #define UDP_SERVER_PORT 8100
 
 
-
 static struct sensorval_l *th_r;    // Humidity & temperature readings 
 static struct sensorval_l *th_p;    // Pointer to block of memory
 static struct etimer time_to_read;
@@ -77,17 +76,17 @@ PROCESS_THREAD(sense_and_send, ev, data)
     list_init(quantum_l);
     memb_init(&th_buff);
     if((th_p = (struct sensorval_l*)memb_alloc(&th_buff)) == NULL) {
-        printf("Not enough memory!\n");
+        // printf("Not enough memory!\n");
         PROCESS_EXIT();
     }
     avr_h = avr_t = 0.0f;
     etimer_set(&time_to_read, CLOCK_SECOND * 10);   // 1 mins / 7 secs
 
     // SENSORS_ACTIVATE(sht11_sensor);
-    printf("Sensor activated!\n");
+    // printf("Sensor activated!\n");
 
     while(1) {
-        printf("Loop!\n");
+        // printf("Loop!\n");
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         /* Read temperature values */
@@ -100,7 +99,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
             list_add(quantum_l, th_r++);
         }
         avr_h = (0.01 * osw_average(&quantum_l)) - 36.9;
-        printf("avg1 humidity: %f\n",(double)avr_h);
+        // printf("avg1 humidity: %f\n",(double)avr_h);
         avr_h = (0.01 * avr_h) - 36.9;
 
         /* Read Humidity values */
@@ -113,11 +112,11 @@ PROCESS_THREAD(sense_and_send, ev, data)
             list_add(quantum_l, th_r++); 
         }
         avr_t = osw_average(&quantum_l);
-        printf("avg1 temperature: %f\n",(double)avr_t);
+        // printf("avg1 temperature: %f\n",(double)avr_t);
         avr_t = -4 + (0.0405 * avr_t) - (0.0000028 * avr_t * avr_t);
 
-        printf("avg humidity: %f\n", (double)avr_h);
-        printf("avg temperature: %f\n", (double)avr_t);
+        // printf("avg humidity: %f\n", (double)avr_h);
+        // printf("avg temperature: %f\n", (double)avr_t);
 
         /* Send over network */
         if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
