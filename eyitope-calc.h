@@ -26,6 +26,7 @@ struct sensorval_l {
 * @param tomato_stack: A pointer to the queue.
 * @return: A pointer to the calculated average. 
 */
-float osw_average(list_t *tomato_stack);
+static float 
+osw_average(list_t *tomato_stack);
 
 #endif

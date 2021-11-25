@@ -3,7 +3,8 @@
 #include <math.h>
 #include <stdio.h>
 
-float osw_average(list_t *tomato_stack)  
+static float 
+osw_average(list_t *tomato_stack)  
 {
     float average = 0.0f;
     struct sensorval_l *p = NULL;
@@ -23,7 +24,3 @@ float osw_average(list_t *tomato_stack)
 
     return average;
 }
-
-
-    // for(i = 0; i < 7; i++) printf("x[%d] = %f\n", i, x[i]);
-        // printf("rd: %f, to: %f, av: %f, i: %d\n", p->reading, total, total/i, i);
