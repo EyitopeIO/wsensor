@@ -26,8 +26,8 @@
 #define UDP_SERVER_PORT 8100
 
 
-static struct sensorval_l *th_r;    // Humidity & temperature readings 
-static struct sensorval_l *th_p;    // Pointer to block of memory
+// static struct sensorval_l *th_r;    // Humidity & temperature readings 
+// static struct sensorval_l *th_p;    // Pointer to block of memory
 static struct etimer time_to_read;
 
 /* Address of most recent readinfs in dynamic memory area*/
