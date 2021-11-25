@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
-
-static float 
-osw_average(list_t *tomato_stack)  
+ 
+float osw_average(list_t *tomato_stack)  
 {
     float average = 0.0f;
     struct sensorval_l *p = NULL;
