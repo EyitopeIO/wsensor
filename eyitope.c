@@ -41,7 +41,7 @@ static int counter = WINDOW_SIZE;
 
 static struct simple_udp_connection udp_conn;
 static uip_ipaddr_t dest_addr;     // destination IP address
-static char json_formatted[24];     // {"+aa.bb","+cc.dd"}
+static char json_formatted[24];     // {\"+aa.bb\",\"+cc.dd\"}
 
 static void
 udp_rx_callback(struct simple_udp_connection *c,
@@ -60,8 +60,6 @@ udp_rx_callback(struct simple_udp_connection *c,
 #endif
   LOG_INFO_("\n");
 
-  printf("Received message: %d\n", (int)(*data));
-
 }
 /*---------------------------------------------------------------------------*/
 
@@ -72,7 +70,6 @@ AUTOSTART_PROCESSES(&sense_and_send);
 
 PROCESS_THREAD(sense_and_send, ev, data) 
 {
-
     PROCESS_BEGIN();
     leds_on(LEDS_ALL);
 
@@ -111,7 +108,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
     SENSORS_ACTIVATE(sht11_sensor);
     // printf("Sensor activated!\n");
 
-    // leds_off(LEDS_ALL);
+    leds_off(LEDS_ALL);
 
     while(1) {
         
@@ -132,7 +129,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
         list_add(quantum_hu, hu_r++); 
 
         if (counter == 0) { 
-          // leds_on(LEDS_ALL);
+          leds_on(LEDS_ALL);
 
           avr_t = osw_average(&quantum_te);
           avr_t = -4 + (0.0405 * avr_t) - (0.0000028 * avr_t * avr_t);
@@ -145,7 +142,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
           /* Send over network */
           if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
               sprintf(json_formatted, "{\"%.2f\",\"%.2f\"}", (double)avr_t, (double)avr_t);
-              simple_udp_sendto(&udp_conn, json_formatted, strlen(json_formatted), &dest_addr);
+              simple_udp_sendto(&udp_conn, json_formatted, sizeof(json_formatted), &dest_addr);
           }
 
           counter = WINDOW_SIZE;
