@@ -94,7 +94,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
     MEMB(t_buff, struct sensorval_l, WINDOW_SIZE);
     MEMB(h_buff, struct sensorval_l, WINDOW_SIZE);
 
-    random_init(3);
+    // random_init(3);
     // list_init(quantum_l);
     // memb_init(&th_buff);
     
@@ -120,6 +120,8 @@ PROCESS_THREAD(sense_and_send, ev, data)
     // }
 
     avr_h = avr_t = 0.0f;
+    te_r = te_p;
+    hu_r = hu_p;
     etimer_set(&time_to_read, CLOCK_SECOND * 9);   // 60s / WINDOW_SIZE ~= 9 secs
 
     // SENSORS_ACTIVATE(sht11_sensor);
