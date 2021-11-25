@@ -1,24 +1,9 @@
-# CONTIKI = ../
+CONTIKI_PROJECT = eyitope
 
-# include $(CONTIKI)/Makefile.include
+all: $(CONTIKI_PROJECT) 
 
-# CONTIKI_PROJECT = wsensor
+PROJECT_SOURCEFILES += eyitope-calc.c
+CFLAGS += -Wall
 
-# MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
-
-# PROJECT_SOURCEFILES += eyitope-ring-buffer.c eyitope-calc-test.c
-# PROJECT_HEADERS += eyitope-ring-buffer.h eyitope.h
-
-# ALL_INCLUDES += $(CONTIKI)/os
-
-# all: $(CONTIKI_PROJECT)
-
-# test-all: $(PROJECT_SOURCEFILES) $(PROJECT_HEADERS)
-# 	$(CC) -I$(ALL_INCLUDES) $(PROJECT_SOURCEFILES) -o test-all 
-
-
-CONTIKI_PROJECT = wsensor
-all: $(CONTIKI_PROJECT
-
-CONTIKI=../
+CONTIKI = ..
 include $(CONTIKI)/Makefile.include
