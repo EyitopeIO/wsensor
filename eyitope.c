@@ -127,7 +127,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
         /* Read Humidity values */
         // hu_r->reading = 44.44f;
-        th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
+        hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
         // printf("humidity readings: %f\n",(double)hu_r->reading);
         list_add(quantum_hu, hu_r++); 
 
