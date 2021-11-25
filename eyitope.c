@@ -44,6 +44,7 @@ static uip_ipaddr_t dest_addr;     // destination IP address
 static char json_formatted[24];     // {\"+aa.bb\",\"+cc.dd\"}
 
 static void
+  printf("Received message: %d\n", (int)(*data));
 udp_rx_callback(struct simple_udp_connection *c,
          const uip_ipaddr_t *sender_addr,
          uint16_t sender_port,
@@ -111,20 +112,18 @@ PROCESS_THREAD(sense_and_send, ev, data)
     leds_off(LEDS_ALL);
 
     while(1) {
-        
-        printf("Loop!\n");
-        
+                
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         /* Read temperature values */
-        // te_r->reading = 33.33f;
-        te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
+        te_r->reading = 33.33f;
+        // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
         // printf("temperature readings: %f\n",(double)te_r->reading);
         list_add(quantum_te, te_r++);
 
         /* Read Humidity values */
-        // hu_r->reading = 44.44f;
-        hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
+        hu_r->reading = 44.44f;
+        // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
         // printf("humidity readings: %f\n",(double)hu_r->reading);
         list_add(quantum_hu, hu_r++); 
 
@@ -133,11 +132,11 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
           avr_t = osw_average(&quantum_te);
           avr_t = -4 + (0.0405 * avr_t) - (0.0000028 * avr_t * avr_t);
-          printf("avg1 temperature: %f\n",(double)avr_t);
+          // printf("avg1 temperature: %f\n",(double)avr_t);
   
           avr_h = (0.01 * osw_average(&quantum_hu)) - 36.9;
           avr_h = (0.01 * avr_h) - 36.9;
-          printf("avg1 humidity: %f\n",(double)avr_h);
+          // printf("avg1 humidity: %f\n",(double)avr_h);
 
           /* Send over network */
           if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
