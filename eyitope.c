@@ -132,13 +132,13 @@ PROCESS_THREAD(sense_and_send, ev, data)
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         /* Read temperature values */
-        te_r->reading = (float)(abs(random_rand()) & 0x55);
+        te_r->reading = 33.33f;
         // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
         printf("temperature readings: %f\n",(double)te_r->reading);
         list_add(quantum_te, te_r++);
 
         /* Read Humidity values */
-        hu_r->reading = (float)(abs(random_rand()) & 0x55);
+        hu_r->reading = 44.44f;
         // th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
         printf("humidity readings: %f\n",(double)hu_r->reading);
         list_add(quantum_hu, hu_r++); 
