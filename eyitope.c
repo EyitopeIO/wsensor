@@ -5,6 +5,7 @@
 #include "dev/sensor/sht11/sht11-sensor.h"
 #include "sys/etimer.h"
 #include "sys/clock.h"
+#include "dev/leds.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include <string.h>
@@ -53,6 +54,8 @@ udp_rx_callback(struct simple_udp_connection *c,
 #endif
   LOG_INFO_("\n");
 
+  printf("Received message: %d\n", data);
+
 }
 /*---------------------------------------------------------------------------*/
 
@@ -65,6 +68,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
 {
 
     PROCESS_BEGIN();
+    leds_on(LEDS_ALL);
 
     /* Initialize UDP connection */
     simple_udp_register(&udp_conn, UDP_CLIENT_PORT, NULL,
@@ -82,8 +86,10 @@ PROCESS_THREAD(sense_and_send, ev, data)
     avr_h = avr_t = 0.0f;
     etimer_set(&time_to_read, CLOCK_SECOND * 10);   // 1 mins / 7 secs
 
-    // SENSORS_ACTIVATE(sht11_sensor);
+    SENSORS_ACTIVATE(sht11_sensor);
     // printf("Sensor activated!\n");
+
+    leds_off(LEDS_ALL);
 
     while(1) {
         // printf("Loop!\n");
@@ -123,8 +129,10 @@ PROCESS_THREAD(sense_and_send, ev, data)
             sprintf(json_formatted, "{\"%.2f\",\"%.2f\"}", (double)avr_t, (double)avr_t);
             simple_udp_sendto(&udp_conn, json_formatted, strlen(json_formatted), &dest_addr);
         }
-
+        leds_on(LEDS_ALL);
         etimer_reset(&time_to_read);
+        leds_off(LEDS_ALL);
+
     }
 
     memb_free(&th_buff, th_p);
