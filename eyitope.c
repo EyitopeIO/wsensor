@@ -44,7 +44,6 @@ static uip_ipaddr_t dest_addr;     // destination IP address
 static char json_formatted[24];     // {\"+aa.bb\",\"+cc.dd\"}
 
 static void
-  printf("Received message: %d\n", (int)(*data));
 udp_rx_callback(struct simple_udp_connection *c,
          const uip_ipaddr_t *sender_addr,
          uint16_t sender_port,
