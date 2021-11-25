@@ -4,7 +4,7 @@ all: $(CONTIKI_PROJECT) eyitope-calc-test.c
 
 MODULES += $(CONTIKI_NG_SERVICES_DIR)/unit-test
 PROJECT_SOURCEFILES += eyitope-calc.c
-CFLAGS += -Wno-unused-variable
+CFLAGS += -Wall
 
 CONTIKI = ..
 include $(CONTIKI)/Makefile.include
