@@ -168,7 +168,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
           // leds_off(LEDS_ALL);
         }
-        count--;
+        counter--;
         etimer_reset(&time_to_read);
     }
 
