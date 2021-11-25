@@ -54,7 +54,7 @@ udp_rx_callback(struct simple_udp_connection *c,
 #endif
   LOG_INFO_("\n");
 
-  printf("Received message: %d\n", data);
+  printf("Received message: %d\n", (int)data);
 
 }
 /*---------------------------------------------------------------------------*/
