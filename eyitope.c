@@ -140,7 +140,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
           /* Send over network */
           if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
               sprintf(json_formatted, "{\"%.2f\",\"%.2f\"}", (double)avr_t, (double)avr_t);
-              simple_udp_sendto(&udp_conn, json_formatted, sizeof(json_formatted), &dest_addr);
+              simple_udp_sendto(&udp_conn, json_formatted, strlen(json_formatted), &dest_addr);
           }
 
           counter = WINDOW_SIZE;
