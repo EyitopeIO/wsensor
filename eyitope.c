@@ -40,7 +40,7 @@ static struct sensorval_l *te_p;
 
 static float avr_h;     // Average humidity
 static float avr_t;     // Average temperature
-static int counter;  
+static int counter = WINDOW_SIZE;  
 
 static struct simple_udp_connection udp_conn;
 static uip_ipaddr_t dest_addr;     // destination IP address
@@ -85,7 +85,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
     // LIST(quantum_l);        // List of acquired data points
     
-    /* Humidity and temperature circular buffer */
+    /* represents the window */
     LIST(quantum_hu);
     LIST(quantum_te);
 
@@ -128,19 +128,21 @@ PROCESS_THREAD(sense_and_send, ev, data)
     // leds_off(LEDS_ALL);
 
     while(1) {
-        // printf("Loop!\n");
+        
+        printf("Loop!\n");
+        
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         /* Read temperature values */
         te_r->reading = 33.33f;
         // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
-        printf("temperature readings: %f\n",(double)te_r->reading);
+        // printf("temperature readings: %f\n",(double)te_r->reading);
         list_add(quantum_te, te_r++);
 
         /* Read Humidity values */
         hu_r->reading = 44.44f;
         // th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
-        printf("humidity readings: %f\n",(double)hu_r->reading);
+        // printf("humidity readings: %f\n",(double)hu_r->reading);
         list_add(quantum_hu, hu_r++); 
 
         if (counter == 0) { 
@@ -166,7 +168,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
           // leds_off(LEDS_ALL);
         }
-
+        count--;
         etimer_reset(&time_to_read);
     }
 
