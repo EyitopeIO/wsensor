@@ -1,8 +1,8 @@
 
 #include "contiki.h"
 #include "eyitope-calc.h"
-// #include "dev/sensor/sht11/sht11.h"
-// #include "dev/sensor/sht11/sht11-sensor.h"
+#include "dev/sensor/sht11/sht11.h"
+#include "dev/sensor/sht11/sht11-sensor.h"
 #include "sys/etimer.h"
 #include "sys/clock.h"
 #include "dev/leds.h"
@@ -25,9 +25,6 @@
 #define UDP_CLIENT_PORT 8000
 #define UDP_SERVER_PORT 8100
 
-
-// static struct sensorval_l *th_r;    // Humidity & temperature readings 
-// static struct sensorval_l *th_p;    // Pointer to block of memory
 static struct etimer time_to_read;
 
 /* Address of most recent readinfs in dynamic memory area*/
@@ -77,27 +74,19 @@ PROCESS_THREAD(sense_and_send, ev, data)
 {
 
     PROCESS_BEGIN();
-    // leds_on(LEDS_ALL);
+    leds_on(LEDS_ALL);
 
     /* Initialize UDP connection */
     simple_udp_register(&udp_conn, UDP_CLIENT_PORT, NULL,
                       UDP_SERVER_PORT, udp_rx_callback);
-
-    // LIST(quantum_l);        // List of acquired data points
     
     /* represents the window */
     LIST(quantum_hu);
     LIST(quantum_te);
-
-    //MEMB(th_buff, struct sensorval_l, WINDOW_SIZE);     // Block of memory
     
     MEMB(t_buff, struct sensorval_l, WINDOW_SIZE);
     MEMB(h_buff, struct sensorval_l, WINDOW_SIZE);
 
-    // random_init(3);
-    // list_init(quantum_l);
-    // memb_init(&th_buff);
-    
     /* Initialise dynamic memory areas */
     list_init(quantum_hu);
     list_init(quantum_te);
@@ -114,18 +103,13 @@ PROCESS_THREAD(sense_and_send, ev, data)
         PROCESS_EXIT();
     }
 
-    // if((th_p = (struct sensorval_l*)memb_alloc(&th_buff)) == NULL) {
-    //     // printf("Not enough memory!\n");
-    //     PROCESS_EXIT();
-    // }
-
     avr_h = avr_t = 0.0f;
     te_r = te_p;
     hu_r = hu_p;
     etimer_set(&time_to_read, CLOCK_SECOND * 9);   // 60s / WINDOW_SIZE ~= 9 secs
 
-    // SENSORS_ACTIVATE(sht11_sensor);
-    printf("Sensor activated!\n");
+    SENSORS_ACTIVATE(sht11_sensor);
+    // printf("Sensor activated!\n");
 
     // leds_off(LEDS_ALL);
 
@@ -136,14 +120,14 @@ PROCESS_THREAD(sense_and_send, ev, data)
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         /* Read temperature values */
-        te_r->reading = 33.33f;
-        // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
+        // te_r->reading = 33.33f;
+        te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
         // printf("temperature readings: %f\n",(double)te_r->reading);
         list_add(quantum_te, te_r++);
 
         /* Read Humidity values */
-        hu_r->reading = 44.44f;
-        // th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
+        // hu_r->reading = 44.44f;
+        th_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
         // printf("humidity readings: %f\n",(double)hu_r->reading);
         list_add(quantum_hu, hu_r++); 
 
@@ -168,7 +152,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
           te_r = te_p;
           hu_r = hu_p;
 
-          // leds_off(LEDS_ALL);
+          leds_off(LEDS_ALL);
         }
         counter--;
         etimer_reset(&time_to_read);
