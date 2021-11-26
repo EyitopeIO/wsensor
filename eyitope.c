@@ -52,20 +52,17 @@ udp_rx_callback(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-
   LOG_INFO("Received response '%.*s' from ", datalen, (char *) data);
   LOG_INFO_6ADDR(sender_addr);
 #if LLSEC802154_CONF_ENABLED
   LOG_INFO_(" LLSEC LV:%d", uipbuf_get_attr(UIPBUF_ATTR_LLSEC_LEVEL));
 #endif
   LOG_INFO_("\n");
-
 }
 /*---------------------------------------------------------------------------*/
 
 
 PROCESS(sense_and_send, "Main process");
-
 AUTOSTART_PROCESSES(&sense_and_send);
 
 PROCESS_THREAD(sense_and_send, ev, data) 
