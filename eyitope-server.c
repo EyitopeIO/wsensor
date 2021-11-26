@@ -38,11 +38,13 @@
 
 #define WITH_SERVER_REPLY  1
 #define UDP_SERVER_PORT	8100
+#define UDP_CLIENT_PORT 8000
 
 static struct simple_udp_connection udp_conn;
 
 PROCESS(udp_server_process, "UDP server");
-AUTOSTART_PROCESSES(&udp_server_process);
+AUTOSTART_PROCESSES(&udp_ser
+ver_process);
 /*---------------------------------------------------------------------------*/
 static void
 udp_rx_callback(struct simple_udp_connection *c,
