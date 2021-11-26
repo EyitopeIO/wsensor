@@ -81,8 +81,9 @@ PROCESS_THREAD(sense_and_send, ev, data)
     LIST(quantum_hu);
     LIST(quantum_te);
     
-    MEMB(t_buff, struct sensorval_l, WINDOW_SIZE);
-    MEMB(h_buff, struct sensorval_l, WINDOW_SIZE);
+    /* WINDOW_SIZE + 1 because list holds 8 elements but finds average of 7 */
+    MEMB(t_buff, struct sensorval_l, WINDOW_SIZE + 1);
+    MEMB(h_buff, struct sensorval_l, WINDOW_SIZE + 1);
 
     /* Initialise dynamic memory areas */
     list_init(quantum_hu);

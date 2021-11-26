@@ -11,11 +11,6 @@
 * Do not ever modify the first member. Ever.
 * Your business is only with the second member.
 */
-struct sensorval_q {
-    struct queue_t *next;
-    float reading;
-};
-
 struct sensorval_l {
     struct list_t *next;
     float reading;
@@ -23,10 +18,9 @@ struct sensorval_l {
 
 /*
 * Calculate the average of the last 7 elements in the queue.
-* @param tomato_stack: A pointer to the queue.
-* @return: A pointer to the calculated average. 
+* @param tomato_stack: A pointer to the list data structure.
+* @return: The calculated average. 
 */
-
 float osw_average(list_t *tomato_stack);
 
 #endif
