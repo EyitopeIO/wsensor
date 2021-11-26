@@ -64,7 +64,7 @@ static void udp_rx_callback(struct simple_udp_connection *c,
 PROCESS(server_pro, "UDP server");
 AUTOSTART_PROCESSES(&server_pro);
 
-PROCESS_THREAD(Server_pro, ev, data)
+PROCESS_THREAD(server_pro, ev, data)
 {
   PROCESS_BEGIN();
 
