@@ -132,11 +132,11 @@ PROCESS_THREAD(sense_and_send, ev, data)
 
           avr_t = osw_average(&quantum_te);
           avr_t = -4 + (0.0405 * avr_t) - (0.0000028 * avr_t * avr_t);
-          printf("avg1 temperature: %d.%02u\n",(int)avr_t), (unsigned int)abs((avr_t-(int)avr_t)*100);
+          printf("avg1 temperature: %d.%02u\n",(int)avr_t, (unsigned int)abs((avr_t-(int)avr_t)*100));
   
           avr_h = (0.01 * osw_average(&quantum_hu)) - 36.9;
           avr_h = (0.01 * avr_h) - 36.9;
-          printf("avg1 temperature: %d.%02u\n",(int)avr_h), (unsigned int)abs((avr_h-(int)avr_h)*100);
+          printf("avg1 temperature: %d.%02u\n",(int)avr_h, (unsigned int)abs((avr_h-(int)avr_h)*100));
 
           /* Send over network */
           if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_addr)) {
