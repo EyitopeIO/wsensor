@@ -50,13 +50,19 @@ static void udp_rx_callback(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  printf("Received request '%.*s' from ", datalen, (char *) data);
+  LOG_INFO("Received request '%.*s' from ", datalen, (char *) data);
+  LOG_INFO_6ADDR(sender_addr);
+  LOG_INFO_("\n");
+#if WITH_SERVER_REPLY
+  /* send back the same string to the client as an echo reply */
+  LOG_INFO("Sending response.\n");
   simple_udp_sendto(&udp_conn, data, datalen, sender_addr);
+#endif /* WITH_SERVER_REPLY */
 }
 
 
 PROCESS(udp_server_process, "UDP server");
-AUTOSTART_PROCESSES(&udp_server_process);
+// AUTOSTART_PROCESSES(&udp_server_process);
 
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(udp_server_process, ev, data)
