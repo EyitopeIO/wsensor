@@ -2,7 +2,6 @@ CONTIKI_PROJECT = eyitope-server
 
 all: $(CONTIKI_PROJECT) 
 
-PROJECT_SOURCEFILES += eyitope-server.c
 CFLAGS += -Wall
 
 
