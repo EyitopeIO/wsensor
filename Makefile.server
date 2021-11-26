@@ -1,0 +1,10 @@
+CONTIKI_PROJECT = eyitope-server
+
+all: $(CONTIKI_PROJECT) 
+
+PROJECT_SOURCEFILES += eyitope-server.c
+CFLAGS += -Wall
+
+
+CONTIKI = ..
+include $(CONTIKI)/Makefile.include
