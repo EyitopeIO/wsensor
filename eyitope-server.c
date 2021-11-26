@@ -64,6 +64,10 @@ static void udp_rx_callback(struct simple_udp_connection *c,
 PROCESS(server_pro, "UDP server");
 AUTOSTART_PROCESSES(&server_pro);
 
+/*
+* Used to test that upward routing works.
+* In simulation or implementation, this is loaded into the border node.
+*/
 PROCESS_THREAD(server_pro, ev, data)
 {
   PROCESS_BEGIN();

@@ -90,7 +90,7 @@ PROCESS_THREAD(sense_and_send, ev, data)
     MEMB(t_buff, struct sensorval_l, WINDOW_SIZE + 1);
     MEMB(h_buff, struct sensorval_l, WINDOW_SIZE + 1);
 
-    /* Initialise dynamic memory areas */
+    /* Initialise all dynamic memory areas */
     list_init(quantum_hu);
     list_init(quantum_te);
     memb_init(&t_buff);
