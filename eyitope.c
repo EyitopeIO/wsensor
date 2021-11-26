@@ -65,6 +65,14 @@ udp_rx_callback(struct simple_udp_connection *c,
 PROCESS(sense_and_send, "Main process");
 AUTOSTART_PROCESSES(&sense_and_send);
 
+
+/*
+* Main routine
+* 1. Read temperature & humidity every 9s
+* 2. Add to list
+* 3. After 8 readings, find the average
+* 4. Transmit to to other networks
+*/
 PROCESS_THREAD(sense_and_send, ev, data) 
 {
     PROCESS_BEGIN();
@@ -104,7 +112,6 @@ PROCESS_THREAD(sense_and_send, ev, data)
     etimer_set(&time_to_read, CLOCK_SECOND * 9);   // 60s / WINDOW_SIZE ~= 9 secs
 
     SENSORS_ACTIVATE(sht11_sensor);
-    // printf("Sensor activated!\n");
 
     leds_off(LEDS_ALL);
 
@@ -113,15 +120,13 @@ PROCESS_THREAD(sense_and_send, ev, data)
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&time_to_read));
 
         /* Read temperature values */
-        te_r->reading = 33.33f;
-        // te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
-        // printf("temperature readings: %f\n",(double)te_r->reading);
+        // te_r->reading = 33.33f;
+        te_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_TEMP);
         list_add(quantum_te, te_r++);
 
         /* Read Humidity values */
-        hu_r->reading = 44.44f;
-        // hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
-        // printf("humidity readings: %f\n",(double)hu_r->reading);
+        // hu_r->reading = 44.44f;
+        hu_r->reading = (float)sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
         list_add(quantum_hu, hu_r++); 
 
         if (counter == 0) { 
